@@ -1,0 +1,31 @@
+name: TerraCraftItems
+version: '1.0'
+main: io.tanice.terracraftitems.bukkit.TerraCraftItems
+api-version: '1.20'
+
+prefix: TerraCraftItems
+depend: [NBTAPI]
+
+commands:
+  terracraftitems:
+    aliases: [tci, terrai]
+
+permissions:
+  # 主命令权限
+  terracraftitems.command:
+    description: "Allows using the main 'terracraftitems' command"
+    default: op
+  # reload 子命令权限
+  terracraftitems.command.reload:
+    description: "Allows reload terracraftitems plugin"
+    default: op
+
+  # getItem 子命令权限
+  terracraftitems.command.get:
+    description: "Allows using the 'get' subcommand to give TerraCraft items"
+    default: op
+
+  #info 子命令权限
+  terracraftitems.command.info:
+    description: "Allows using the 'info' subcommand to check components under TerraCraft item "
+    default: op

@@ -1,0 +1,495 @@
+# MINIMESSAGE 的hover语法不支持在lore中使用
+# 可堆叠物品不要有宝石槽位(Gem_holder)组件,否则将可以用来刷宝石
+# 槽位一定要限制：不然会出现玩家双手武器伤害和效果都能生效的问题
+
+NBT全知全能:
+  id: book
+  display_name: "<red>NBT组件测试"
+  custom_model_data: 10086
+  dyed_color: 0xFF5500
+  lore:
+    - "<red>所有支持的组件都来一套"
+    - "<yellow>全是bug :("
+  max_stack_size: 1
+  attribute:
+    random_id_1:
+      attr: ATTACK_DAMAGE
+      amount: 5.0
+      operation: add_value
+      slot: offhand
+    random_id_2:
+      attr: ATTACK_KNOCKBACK
+      amount: 0.2
+      operation: add_value
+      slot: mainhand
+  shield:
+    delay_seconds: 0
+    base: 1
+    factor: 0.5
+    threshold: 90
+    pass: arrow
+    cooldown_scale: 1
+    reduction:  # 未指定能阻挡一切伤害
+      random_key:
+        base: 4
+        factor: 0.5
+        angle: 180
+        type: is_player_attack
+    block_sound:
+      id: block.campfire.crackle
+      range: 8
+    disable_sound:
+      id: block.end_portal.spawn
+      range: 16
+  break_sound:
+    id: block.end_portal_frame.fill
+    range: 16
+  consumable:
+    animation: eat
+    consume_seconds: 5
+    particle: true
+    sound:
+      id: block.anvil.land
+      range: 16
+    effects:
+      apply_effects:
+        chance: 0.5
+        potions:
+          slowness:
+            duration: 200
+            amplifier: 2
+            icon: false
+            particles: true
+  ori_durability:
+    damage: 50
+    max_damage: 51
+    unbreakable: false
+  resistant: is_fire
+  death_protection:
+    apply_effects:  # apply_effects,play_sound,remove_effects,clear_all_effects,teleport_randomly
+      chance: 0.5
+      potions:
+        slowness:
+          duration: 200
+          amplifier: 2
+          icon: false
+          particles: true
+  enchant:
+    value: 90
+    enchants:
+      - "sharpness 3"
+      - "unbreaking 2"
+  glint: true
+  equippable:
+    allow:
+      - player
+      - zombie
+    # asset: 装备模型命名空间ID
+    # camera: 纹理命名空间ID   例子：带上南瓜头的玩家视角纹理
+    can_shear: true
+    damage_on_hurt: true
+    equip_on_interact: true
+    equip_sound:
+      id: bucket.empty_water
+      range: 16
+    dispensable:
+    shearing_sound:
+      id: bottle.dragonbreath
+    slot: head
+    swappable: true
+  food:
+    always_eat: true     # 是否可随时食用（无视饱食度）
+    nutrition: 8          # 饱食度
+    saturation: 0.6       # 饱和
+  glider:  # 写了就行, 无视值
+  # 可播放组件
+  music_disc: cat  # 唱片机曲目命名空间ID
+  # 药水效果
+  potion:
+    color: "#FF0000"
+    name: "强效治疗药水"
+    id: minecraft:healing
+    duration_scale: 1.5
+    potions:
+      regeneration:
+        duration: 600
+        amplifier: 2
+      absorption:
+        duration: 300
+        amplifier: 1
+  rarity: epic  # COMMON,UNCOMMON,RARE,EPIC,
+  repair:
+    cost: 10 # 累计惩罚值
+    items:
+      - stone
+  tool:
+    creative_destroy: false
+    damage_per_block: 10
+    default_speed: 0.1
+    rules:
+      random_key:
+        items:
+          - minecraft:bedrock
+          - minecraft:stone
+        drop: true
+        speed: 8.0
+  tooltip:
+    hide_tooltip: false  # 不隐藏提示框
+    hide_tags:  # 1.20.5之后写组件名，之前写hide_flags中的值
+      - attribute_modifiers
+    # style: 物品提示框外观命名空间id
+  use_cooldown:
+    group: terra_group_1  # 同组物品的冷却共享
+    seconds: 5
+  use_remainder:
+    id: axolotl_bucket
+    component: "{\"minecraft:custom_name\":\"??\"}"  # 正常格式：{minecraft:custom_name:'{"color":"yellow","text":"打咩哟"}'}  # 所有组件一定要有minecraft:！！！！
+    count: 1
+  weapon:
+    disable_shield_seconds: 5
+    damage_per_attack: 2
+
+
+谢版盾牌:
+  id: feather
+  display_name: "<red>NBT盾牌(额外)测试"
+  max_stack_size: 1
+  shield:
+    delay_seconds: 0
+    base: 7
+    factor: 0.5
+    threshold: 5
+    pass: arrow
+    cooldown_scale: 1
+    reduction:  # 未指定能阻挡一切伤害
+      random_key:
+        base: 4
+        factor: 0.5
+        angle: 180
+    block_sound:
+      id: block.campfire.crackle
+      range: 8
+    disable_sound:
+      id: block.end_portal.spawn
+      range: 16
+  break_sound:
+    id: block.end_portal_frame.fill
+    range: 16
+  resistant: is_fire
+  rarity: epic  # COMMON,UNCOMMON,RARE,EPIC,
+
+buff测试武器1:
+  id: golden_axe
+  display_name: "<yellow>buff[神迹]测试武器"
+  max_stack_size: 1
+  lore:
+    - "<yellow>[神迹] <red>会覆盖 <yellow>[流血]"
+  buff:
+    hold:
+      - "测试增益_1_damage_add"
+    # attack_self:
+    attack:
+      - "全面增益测试"
+    # defense_self:
+    # defense:
+
+buff测试武器2:
+  id: iron_axe
+  display_name: "<yellow>buff[流血]测试武器"
+  max_stack_size: 1
+  lore:
+    - "<yellow>[流血] <red>和 <yellow>[吸血] 冲突"
+  buff:
+    hold:
+      - "吸血"
+    # attack_self:
+    attack:
+      - "流血"
+    # defense_self:
+    # defense:
+
+智能干架助手:
+  id: clock
+  display_name: "<yellow>解放你的双手"
+  max_stack_size: 1
+  lore:
+    - "<green>everybody follow me"
+  buff:
+    hold:
+      - "闪避 %90"  # 这里修改的是buff给予的概率，不是闪避成功的概率，这个概率在js内部改
+  slot:
+    content: offhand
+
+TerraMeta测试武器:
+  id: stone_sword  # 这个没法自更新
+  display_name: "<gradient:#FF0000:#FFA500:#FFFF00>Meta测试武器</gradient>"
+  lore:
+    - "<gradient:#4CAF50:#8BC34A><bold>基础攻击伤害: +8</bold></gradient>"
+    - "<gradient:#2196F3:#03A9F4><italic>基础防护: +5</italic></gradient>"
+    - "<gradient:#FFC107:#FFEB3B>固有暴击率: +80%</gradient>"
+    - "<gradient:#F44336:#E91E63>暴击伤害: +150%</gradient>"
+    - ""
+    - "<gradient:#9E9E9E:#616161>战士伤害增加100%</gradient>"
+  damage_type:
+    type: melee  # 造成战士伤害  # 可取值 MELEE,MAGIC,RANGED,ROUGE,SUMMON,OTHER,ENVIRONMENT
+  meta:
+    section: base  # 可选 TIMER, BEFORE_DAMAGE, BASE, ADD, MULTIPLY, FIX, BETWEEN_DAMAGE_AND_DEFENCE, AFTER_DAMAGE, ERROR, INNER
+    # 其中 BASE, ADD, MULTIPLY, FIX 表示计算meta 其余的会运行js脚本
+    attribute:
+      attack_damage: 8
+      armor: 5
+      critical_strike_chance: 0.8
+      critical_strike_damage: 1.5
+      # 玩家伤害属性增加
+      melee: 1  # 战士伤害增加100%
+  gem_holder:
+    limit: 2  # 宝石槽位数量限制
+    # 无初始宝石
+  level:  # 展示有问题
+    lvl: 2  # 设置初始强化成功的次数（和等级无关, 最终的等级是等级模板的最低级+强化成功的次数）
+    template: "示例武器升级模板"
+  quality:  # 展示有问题
+    updatable: true # 默认为true
+    group:
+      - "测试品质组名"
+      - "伤害测试组"
+    default: # 默认品质名
+  buff:
+    attack:
+      - "流血 #200 %0.5 :8"
+#  terra_durability  # 耐久展示有问题
+
+TerraGem伤害增加测试:
+  id: coal
+  display_name: "<gradient:#FFE4E1:#FFFACD>伤害宝石</gradient>"
+  lore:
+    - "<gradient:#FF0000:#FF9900:#FFFF00:#00FF00>武器伤害增加10%</gradient>"
+    - "<gradient:#FFC107:#FF9800>镶嵌成功概率: <bold>100%</bold></gradient>"
+    - "<gradient:#2196F3:#03A9F4>拆卸成功概率: <bold>100%</bold></gradient>"
+    - "<gray>在ADD计算区增加基础伤害</gray>"
+  meta:
+    section: add
+    attribute:
+      attack_damage: 0.1  # 伤害提升 10%
+  gem:  # 宝石标签
+    inlay_chance_expr: 1  # 镶嵌成功概率
+    inlay_fail_loss: false
+    dismantle_chance_expr: 1  # 拆卸成功概率
+    dismantle_fail_loss: false
+
+TerraGem暴击率测试:
+  id: coal
+  display_name: "<gradient:#87CEEB:#4682B4>暴击宝石</gradient>"
+  lore:
+    - "<bold><gradient:#FFB6C1:#9370DB>让你100%暴击!</gradient></bold>"
+    - "<gradient:#FFC107:#FF9800>镶嵌成功概率: <bold>50%</bold><red></gradient><italic>失败会丢失</italic></red>"
+    - "<gradient:#2196F3:#03A9F4>拆卸成功概率: <bold>50%</bold><red></gradient><italic>失败会丢失</italic></red>"
+    - "<gray>在Base计算区增加100%暴击率</gray>"
+  meta:
+    section: base
+    attribute:
+      critical_strike_chance: 1
+  gem:
+    inlay_chance_expr: 0.5  # 镶嵌成功概率
+    inlay_fail_loss: true
+    dismantle_chance_expr: 0.5  # 拆卸成功概率
+    dismantle_fail_loss: true
+
+TerraGem护甲值测试:
+  id: diamond
+  display_name: "<gradient:#87CEEB:#4682B4>保护宝石</gradient>"
+  lore:
+    - "<gradient:#4B0082:#00BFFF>增加你的基础护甲数值</gradient>"
+    - "<gradient:#FFC107:#FF9800>镶嵌成功概率: <bold>20%</bold></gradient><red><italic>失败会丢失</italic></red>"
+    - "<gradient:#2196F3:#03A9F4>拆卸成功概率: <bold>20%</bold></gradient><red><italic>失败会丢失</italic></red>"
+    - "<gray>在Base计算区增加15护甲值</gray>"
+  meta:
+    section: base
+    attribute:
+      armor: 15
+  gem:
+    inlay_chance_expr: "(limit - gem_num + 1) / 10"  # 镶嵌成功概率
+    inlay_fail_loss: true
+    dismantle_chance_expr: "1 / (limit - gem_num + 1)"  # 拆卸成功概率
+    dismantle_fail_loss: true
+
+
+升级材料:
+  id: emerald
+  display_name: "<gradient:#1E90FF:#696969>测试武器的升级材料</gradient>"
+  lore:
+    - "<gradient:#FFD700:#8B4513>神奇的材料蕴含的神奇的力量</gradient>"
+    - "<gray>其实还能吃</gray>"
+  consumable:
+    animation: eat
+    consume_seconds: 2
+    particle: true
+    sound:
+      id: dig.sand
+      range: 8
+  command:  # 被消耗后触发的指令  @self 会换为触发玩家的名字
+    content:
+      - "give @self minecraft:arrow 5"
+      - "effect give @self minecraft:strength 30 1"
+
+# 这只是一个模仿原版盾牌的示例，但是很遗憾，无法实现破盾中强迫玩家放下盾牌的效果（使用buff覆盖即可，但是玩家仍然举着盾牌）
+# 可以使用其他的方式，例如一个不能举的盾牌，在副手生效，检测攻击自动尝试格挡即可
+# 但是目前没有找到扣除对应耐久的方法
+插件盾牌实现:
+  id: shield
+  display_name: "<red>插件盾牌测试"
+  max_stack_size: 1
+  shield:  # 借助原版盾牌动作，下面的三个配置必须要写, 和js配合
+    delay_seconds: 0.5  # 延迟0.5s算作blocking
+    base: 1
+    factor: 0.5
+    threshold: 45  # 角度 = js判定角度 / 2
+  buff:
+    hold:
+      - "格挡"
+  # 让两个手都行，因为原版的盾牌组件判定是两只手都可以，也就都会防止击退
+  glint: true
+
+头盔耐久测试:
+  id: iron_helmet
+  display_name: "<yellow>头盔耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  glint: true
+
+胸甲耐久测试:
+  id: iron_chestplate
+  display_name: "<yellow>胸甲耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  glint: true
+
+护腿耐久测试:
+  id: iron_leggings
+  display_name: "<yellow>护腿耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  glint: true
+
+靴子耐久测试:
+  id: iron_boots
+  display_name: "<yellow>靴子耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  glint: true
+
+工具耐久测试:
+  id: wooden_axe
+  display_name: "<yellow>工具耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  tool:
+    creative_destroy: false
+    damage_per_block: 10 # 本插件支持识别
+    default_speed: 0.1
+    rules:
+      random_key:
+        items:
+          - minecraft:bedrock
+          - minecraft:stone
+        drop: true
+        speed: 8.0
+  glint: true
+
+钓竿耐久测试:
+  id: fishing_rod
+  display_name: "<yellow>工具耐久测试"
+  lore:
+    - "<gray>我还支持原版的break_sound :)"
+    - "<gray>       -terra_durability"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 10
+    break_loss: true
+  glint: true
+  break_sound: # terra_durability也支持原版的break_sound指令，range无效
+    id: block.anvil.land
+
+武器耐久测试:
+  id: golden_sword
+  display_name: "<yellow>武器耐久测试"
+  lore:
+    - "<gradient:#FFD700:#8B4513>你的升级之路必定艰难()</gradient>"
+    - "<red>玻璃大炮</red>"
+    - "<gray>用升级材料即可, 没错就是我懒得写了</gray>"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 125
+    break_loss: false
+    # 支持java的Math库，damage-目前的损伤值  max_damage 此物品最大损伤值  harm-武器或护甲则表示造成或承受的伤害，钓竿，弓，弩的值为0
+    damage_per_use_expr: "Math.max(1, harm * (damage / max_damage + 1))"
+  glint: true
+  meta:
+    section: base
+    attribute:
+      attack_damage: 15
+  weapon:
+    damage_per_attack: 5  # 本插件支持识别，三叉戟也支持
+  level: # 展示有问题
+    template: "带计算式的武器升级模板"
+
+弓耐久测试:
+  id: bow
+  display_name: "<yellow>弓耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 9
+    break_loss: false
+  glint: true
+  break_sound: # terra_durability也支持原版的break_sound指令，range无效
+    id: block.wooden_door.open
+
+弩耐久测试:
+  id: crossbow
+  display_name: "<yellow>弩耐久测试"
+  max_stack_size: 1
+  terra_durability:
+    damage: 0
+    max_damage: 9
+    break_loss: false
+  glint: true
+
+
+skill测试_头盔:
+  id: golden_helmet
+  display_name: "<gold>技能测试_头盔"
+  lore:
+    - "<yellow>[测试功能说明]</yellow>"
+    - "<white>基础操作测试：</white><aqua>左键基础触发 / 右键基础触发</aqua>"
+    - "<white>蹲伏状态测试：</white><aqua>蹲下动作 / 起身动作 / 蹲伏左键 / 蹲伏右键</aqua>"
+    - "<white>跳跃状态测试：</white><aqua>跳跃中左键触发 / 跳跃中右键触发</aqua>"
+    - "<white>远程操作测试：</white><aqua>搭配弓箭时射击触发</aqua>"
+  skill:
+    content:
+      - "测试蹲下"
+      - "测试起身"
+      - "测试蹲下左键"
+      - "测试蹲下右键"
+      - "测试左键"
+      - "测试右键"
+      - "测试跳起左键"
+      - "测试跳起右键"
+      - "测试射箭"

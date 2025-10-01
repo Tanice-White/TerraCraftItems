@@ -1,0 +1,36 @@
+VERSION: 1.0  # 版本号，勿动
+# Debug 开关，默认false
+DEBUG: true  # false
+
+# 是否生成示例配置文件
+generate_examples: true  # true
+
+# 原版属性组件是否覆盖式更新
+update:
+  attribute: false  # false1
+  shield: true
+  break_sound: true
+  consumable: true
+  custom_data: false  # false2
+  custom_model_data: true
+  display_name: false  # false3
+  ori_durability: true
+  resistant: true
+  death_protection: true
+  dyed_color: true
+  enchant: true
+  glint: true
+  equippable: true
+  food: true
+  glider: true
+  music_disc: true
+  lore: true
+  max_stack_size: true
+  potion: true
+  rarity: true
+  repair: true
+  tool: true
+  tooltip: true
+  use_cooldown: true
+  use_remainder: true
+  weapon: true

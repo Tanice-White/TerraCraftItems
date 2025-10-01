@@ -29,7 +29,7 @@ public class ItemInfoCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return "check terraMetas of the item in mainhand or a terra item in config file";
+        return "check terra nbt of the item in mainhand or a terra item in config file";
     }
 
     @Override

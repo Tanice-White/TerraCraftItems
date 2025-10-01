@@ -4,6 +4,7 @@ import io.tanice.terracraftitems.api.item.TerraItemManager;
 import io.tanice.terracraftitems.bukkit.Listener.TerraListener;
 import io.tanice.terracraftitems.bukkit.command.PluginReloadCommand;
 import io.tanice.terracraftitems.bukkit.command.TerraCraftCommand;
+import io.tanice.terracraftitems.bukkit.command.item.ItemDurabilityCommand;
 import io.tanice.terracraftitems.bukkit.command.item.ItemGetCommand;
 import io.tanice.terracraftitems.bukkit.command.item.ItemInfoCommand;
 import io.tanice.terracraftitems.core.config.ConfigManager;
@@ -29,6 +30,7 @@ public final class TerraCraftItems extends JavaPlugin {
         terraCraftCommand.register(new ItemGetCommand());
         terraCraftCommand.register(new ItemInfoCommand());
         terraCraftCommand.register(new PluginReloadCommand());
+        terraCraftCommand.register(new ItemDurabilityCommand());
         terraCraftCommand.enable();
     }
 

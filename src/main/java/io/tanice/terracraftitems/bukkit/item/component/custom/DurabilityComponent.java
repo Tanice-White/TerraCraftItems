@@ -112,7 +112,11 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
 
     @Override
     public void setDamage(@Nullable Integer damage) {
-        if (damage == null) this.damage = null;
+        if (damage == null) {
+            this.damage = null;
+            return;
+        }
+        if (damage < 0) damage = 0;
         else this.damage = Math.min(damage, this.maxDamage);
     }
 

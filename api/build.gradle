@@ -1,0 +1,28 @@
+plugins {
+    id 'maven-publish'  // 用于发布
+}
+
+dependencies {
+    // 仅添加API所需的编译依赖（如Bukkit API接口）
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+}
+
+jar {
+    archiveFileName.set("terracraftitems-api-${version}.jar")
+}
+
+// 配置发布
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = 'terracraftitems-api'  // API专属artifactId
+            version = project.version
+        }
+    }
+    repositories {
+        // 发布到本地Maven仓库（测试用）
+        mavenLocal()
+    }
+}

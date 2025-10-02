@@ -1,0 +1,39 @@
+plugins {
+    id 'com.github.johnrengelman.shadow'
+    id 'xyz.jpenilla.run-paper'
+}
+
+dependencies {
+    implementation project(':api')
+
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.15.1")
+    // janino 数学计算
+    implementation("org.codehaus.janino:janino:3.1.12")
+}
+
+// 生成最终插件Jar
+shadowJar {
+    archiveFileName.set("TerraCraftItems-${version}.jar")
+    from project(':api').sourceSets.main.output
+    mergeServiceFiles()
+}
+
+tasks {
+    runServer {
+        minecraftVersion("1.20")
+        pluginJars.from(shadowJar)
+    }
+    runServer.dependsOn(shadowJar)
+}
+
+// 处理插件资源文件
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

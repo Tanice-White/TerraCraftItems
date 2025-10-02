@@ -36,8 +36,8 @@ public class TerraCraftItemsCommand extends CommandGroup implements CommandExecu
 
     @Override
     protected void sendHelp(CommandSender sender) {
-        sender.sendMessage( MessageManager.getMessage("command.help.header"));
-        sender.sendMessage(MessageManager.getMessage("command.help.main_command"));
+        sender.sendMessage( MessageManager.getMessage("help.header"));
+        sender.sendMessage(MessageManager.getMessage("help.main_command"));
         super.sendHelp(sender);
     }
 

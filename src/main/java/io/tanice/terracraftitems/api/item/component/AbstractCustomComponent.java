@@ -90,7 +90,7 @@ public abstract class AbstractCustomComponent implements TerraBaseComponent {
     @Override
     public void cover(ItemStack item) {
         doCover(item);
-        updateLore();
+        updateLore(item);
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class AbstractCustomComponent implements TerraBaseComponent {
      * <p>
      * 默认实现为空，子类可重写以添加自定义 lore 逻辑
      */
-    protected void updateLore() {
+    protected void updateLore(ItemStack item) {
 
     }
 

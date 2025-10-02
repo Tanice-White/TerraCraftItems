@@ -30,17 +30,17 @@ public class ItemDurabilityCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return MessageManager.getMessage("command.durability.description");
+        return MessageManager.getMessage("durability.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(MessageManager.getMessage("command.player_only"));
+            sender.sendMessage(MessageManager.getMessage("player_only"));
             return true;
         }
         if (args.length != 2) {
-            sender.sendMessage(MessageManager.getMessage("command.invalid_arguments"));
+            sender.sendMessage(MessageManager.getMessage("invalid_arguments"));
             return true;
         }
 
@@ -48,20 +48,20 @@ public class ItemDurabilityCommand extends CommandRunner {
         try {
             value = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(MessageManager.getMessage("command.invalid_number"));
+            sender.sendMessage(MessageManager.getMessage("invalid_number"));
             return true;
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
-            sender.sendMessage(MessageManager.getMessage("command.no_hold_item"));
+            sender.sendMessage(MessageManager.getMessage("no_hold_item"));
             return true;
         }
 
         String action = args[0].toLowerCase();
         DurabilityComponent component = DurabilityComponent.from(item);
         if (component == null) {
-            sender.sendMessage(MessageManager.getMessage("command.durability.blank"));
+            sender.sendMessage(MessageManager.getMessage("durability.blank"));
             return true;
         }
         Integer d = component.getDamage();
@@ -71,7 +71,7 @@ public class ItemDurabilityCommand extends CommandRunner {
             case "set" -> component.setDamage(value);
         }
         component.cover(item);
-        sender.sendMessage(String.format(MessageManager.getMessage("command.durability.success"), component.getDamage()));
+        sender.sendMessage(String.format(MessageManager.getMessage("durability.success"), component.getDamage()));
         return true;
     }
 

@@ -49,12 +49,12 @@ public abstract class CommandGroup extends CommandNode {
 
         CommandNode node = subCommands.get(args[0].toLowerCase());
         if (node == null) {
-            sender.sendMessage(MessageManager.getMessage("command.unknown_command"));
+            sender.sendMessage(MessageManager.getMessage("unknown_command"));
             return true;
         }
 
         if (!node.hasPermission(sender)) {
-            sender.sendMessage(String.format(MessageManager.getMessage("command.required_permission"), node.getPermission()));
+            sender.sendMessage(String.format(MessageManager.getMessage("required_permission"), node.getPermission()));
             return true;
         }
 
@@ -83,7 +83,7 @@ public abstract class CommandGroup extends CommandNode {
 
     protected void sendHelp(CommandSender sender) {
         subCommands.values().forEach(cmd ->
-                sender.sendMessage(String.format(MessageManager.getMessage("command.help.format"), cmd.getName(), cmd.getDescription()))
+                sender.sendMessage(String.format(MessageManager.getMessage("help.format"), cmd.getName(), cmd.getDescription()))
         );
     }
 }

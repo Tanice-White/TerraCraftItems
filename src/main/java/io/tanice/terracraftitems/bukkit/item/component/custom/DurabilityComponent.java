@@ -6,8 +6,11 @@ import io.tanice.terracraftitems.api.item.component.custom.TerraDurabilityCompon
 import io.tanice.terracraftitems.bukkit.item.component.ComponentState;
 import io.tanice.terracraftitems.bukkit.item.datatype.DurabilityComponentDataType;
 import io.tanice.terracraftitems.core.config.ConfigManager;
+import io.tanice.terracraftitems.core.message.MessageManager;
+import io.tanice.terracraftitems.core.util.MiniMessageUtil;
 import io.tanice.terracraftitems.core.util.expression.TerraExpression;
 import io.tanice.terracraftitems.core.util.logger.TerraCraftLogger;
+import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,6 +18,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static io.tanice.terracraftitems.bukkit.util.color.CommandColor.*;
@@ -86,6 +91,20 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
 
     public static void remove(ItemStack item) {
         clear(item);
+    }
+
+    @Override
+    public void updateLore(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+        List<Component> lore =  meta.lore();
+        int d = damage == null ? 0 : damage;
+
+        if (lore == null) lore = new ArrayList<>();
+        else lore.remove(lore.size() - 1);
+        lore.add(MiniMessageUtil.serialize(String.format(MessageManager.getMessage("durability.lore"), maxDamage - d, maxDamage)));
+        meta.lore(lore);
+        item.setItemMeta(meta);
     }
 
     @Override

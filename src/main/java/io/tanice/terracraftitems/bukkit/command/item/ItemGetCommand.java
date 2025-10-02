@@ -21,7 +21,7 @@ public class ItemGetCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return MessageManager.getMessage("command.get.description");
+        return MessageManager.getMessage("get.description");
     }
 
     @Override
@@ -35,11 +35,11 @@ public class ItemGetCommand extends CommandRunner {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(MessageManager.getMessage("command.player_only"));
+            sender.sendMessage(MessageManager.getMessage("player_only"));
             return true;
         }
         if (args.length < 1 || args.length > 3) {
-            sender.sendMessage(MessageManager.getMessage("command.invalid_arguments"));
+            sender.sendMessage(MessageManager.getMessage("invalid_arguments"));
             return true;
         }
 
@@ -52,7 +52,7 @@ public class ItemGetCommand extends CommandRunner {
             } catch (NumberFormatException ignored1) {
                 targetPlayer = Bukkit.getPlayer(args[1]);
                 if (targetPlayer == null) {
-                    sender.sendMessage(String.format(MessageManager.getMessage("command.player_not_found"), args[1]));
+                    sender.sendMessage(String.format(MessageManager.getMessage("player_not_found"), args[1]));
                     return true;
                 }
                 if (args.length == 3) {
@@ -65,12 +65,12 @@ public class ItemGetCommand extends CommandRunner {
         }
         Optional<TerraItem> item = TerraCraftItems.inst().getItemManager().getItem(itemName);
         if (item.isEmpty()) {
-            sender.sendMessage(String.format(MessageManager.getMessage("command.item_not_found"), itemName));
+            sender.sendMessage(String.format(MessageManager.getMessage("item_not_found"), itemName));
         } else {
             ItemStack giveItem = item.get().getBukkitItem();
             giveItem.setAmount(amount);
             targetPlayer.getInventory().addItem(giveItem.clone());
-            sender.sendMessage(String.format(MessageManager.getMessage("command.get.success"),
+            sender.sendMessage(String.format(MessageManager.getMessage("get.success"),
                     targetPlayer.getName(),
                     amount,
                     itemName

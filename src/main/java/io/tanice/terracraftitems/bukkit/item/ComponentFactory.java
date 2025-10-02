@@ -166,6 +166,7 @@ public final class ComponentFactory implements TerraComponentFactory {
 
         /* custom */
         register("command", CommandComponent::new, CommandComponent::from, CommandComponent::remove);
+        /* 在 lore 组件之后 */
         register("terra_durability", DurabilityComponent::new, DurabilityComponent::from, DurabilityComponent::remove);
         register("nbt", ExtraNBTComponent::new, ExtraNBTComponent::from, ExtraNBTComponent::remove);
         // innerName updateCode 由实例掌管

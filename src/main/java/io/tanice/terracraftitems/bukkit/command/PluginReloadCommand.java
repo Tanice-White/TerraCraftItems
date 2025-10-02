@@ -11,13 +11,13 @@ public class PluginReloadCommand extends CommandRunner {
     }
 
     public String getDescription() {
-        return MessageManager.getMessage("command.reload.description");
+        return MessageManager.getMessage("reload.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         TerraCraftItems.inst().reload();
-        sender.sendMessage(MessageManager.getMessage("command.reload.success"));
+        sender.sendMessage(MessageManager.getMessage("reload.success"));
         return true;
     }
 }

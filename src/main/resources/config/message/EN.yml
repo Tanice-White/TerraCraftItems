@@ -1,37 +1,37 @@
 # 命令消息配置
-command:
-  player_only: "§cThis command can only be executed by players"
-  invalid_arguments: "§cInvalid number of arguments"
-  player_not_found: "§cPlayer: %s does not exist"
-  item_not_found: "§cNo terra item named %s"
-  no_hold_item: "§eYou must hold an item in your main hand"
-  invalid_number: "§cInvalid number format"
-  unknown_command: "§cUnknown command"
-  required_permission: "§cRequired permission: §e%s"
+player_only: "§cThis command can only be executed by players"
+invalid_arguments: "§cInvalid number of arguments"
+player_not_found: "§cPlayer: %s does not exist"
+item_not_found: "§cNo terra item named %s"
+no_hold_item: "§eYou must hold an item in your main hand"
+invalid_number: "§cInvalid number format"
+unknown_command: "§cUnknown command"
+required_permission: "§cRequired permission: §e%s"
 
-  # 耐久度相关命令
-  durability:
-    description: "Manage item damage in terra_durability for terra items"
-    success: "§aSuccessfully set damage to %d"
-    blank: "§eItem has no terra_durability component"
+# 耐久度相关命令
+durability:
+  description: "Manage item damage in terra_durability for terra items"
+  success: "§aSuccessfully set damage to %d"
+  lore: "duration:<gray>%d/%d</gray>"
+  blank: "§eItem has no terra_durability component"
 
-  # 重载命令
-  reload:
-    description: "Reload terracraftitems plugin"
-    success: "§aReload Successfully"
+# 重载命令
+reload:
+  description: "Reload terracraftitems plugin"
+  success: "§aReload Successfully"
 
-  # 信息命令
-  info:
-    description: "Check terra nbt of the item in mainhand or a terra item in config file"
-    component_header: "§l§aTerra custom components:"
+# 信息命令
+info:
+  description: "Check terra nbt of the item in mainhand or a terra item in config file"
+  component_header: "§l§aTerra custom components:"
 
-  # 获取命令
-  get:
-    description: "Give terra item to target player"
-    success: "§aSuccessfully gave %s §e%d§a item(s): §9%s"
+# 获取命令
+get:
+  description: "Give terra item to target player"
+  success: "§aSuccessfully gave %s §e%d§a item(s): §9%s"
 
-  # 帮助消息
-  help:
-    header: "§6=== TerraCraft Help ==="
-    main_command: "§bMain command: §f/terracraftitems"
-    format: "§f%s - %s"
+# 帮助消息
+help:
+  header: "§6=== TerraCraft Help ==="
+  main_command: "§bMain command: §f/terracraftitems"
+  format: "§f%s - %s"

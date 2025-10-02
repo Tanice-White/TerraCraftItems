@@ -28,13 +28,13 @@ public class ItemInfoCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return MessageManager.getMessage("command.info.description");
+        return MessageManager.getMessage("info.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length > 1) {
-            sender.sendMessage(MessageManager.getMessage("command.invalid_arguments"));
+            sender.sendMessage(MessageManager.getMessage("invalid_arguments"));
             return true;
         }
 
@@ -42,24 +42,24 @@ public class ItemInfoCommand extends CommandRunner {
             TerraCraftItems.inst().getItemManager().getItem(args[0])
                     .ifPresentOrElse(
                             terraItem -> sender.sendMessage(terraItem.toString()),
-                            () -> sender.sendMessage(String.format(MessageManager.getMessage("command.item_not_found"), args[0]))
+                            () -> sender.sendMessage(String.format(MessageManager.getMessage("item_not_found"), args[0]))
                     );
             return true;
         }
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(MessageManager.getMessage("command.player_only"));
+            sender.sendMessage(MessageManager.getMessage("player_only"));
             return true;
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
-            sender.sendMessage(MessageManager.getMessage("command.no_hold_item"));
+            sender.sendMessage(MessageManager.getMessage("no_hold_item"));
             return true;
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(MessageManager.getMessage("command.info.component_header")).append("\n");
+        sb.append(MessageManager.getMessage("info.component_header")).append("\n");
         List<TerraBaseComponent> components = ComponentFactory.inst().getCustomComponentsFrom(item);
         for (int i = 0; i < components.size(); i++) {
             sb.append(components.get(i));

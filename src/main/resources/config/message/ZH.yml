@@ -1,37 +1,37 @@
 # 命令消息
-command:
-  player_only: "§c此命令只能由玩家执行"
-  invalid_arguments: "§c参数数量无效"
-  player_not_found: "§c玩家: %s 不存在"
-  item_not_found: "§c没有名为 %s 的terra物品"
-  no_hold_item: "§e主手无手持物品"
-  invalid_number: "§c无效的数字格式"
-  unknown_command: "§c未知命令"
-  required_permission: "§c所需权限: §e%s"
+player_only: "§c此命令只能由玩家执行"
+invalid_arguments: "§c参数数量无效"
+player_not_found: "§c玩家: %s 不存在"
+item_not_found: "§c没有名为 %s 的terra物品"
+no_hold_item: "§e主手无手持物品"
+invalid_number: "§c无效的数字格式"
+unknown_command: "§c未知命令"
+required_permission: "§c所需权限: §e%s"
 
-  # 耐久度
-  durability:
-    description: "管理terra物品的terra_durability中的物品损伤值"
-    success: "§a当前耐久%d"
-    blank: "§e物品没有terra_durability组件"
+# 耐久度
+durability:
+  description: "管理terra物品的terra_durability中的物品损伤值"
+  success: "§a当前耐久%d"
+  lore: "耐久:<gray>%d/%d</gray>"
+  blank: "§e物品没有terra_durability组件"
 
-  # 重载
-  reload:
-    description: "重载terracraftitems插件"
-    success: "§a重载成功"
+# 重载
+reload:
+  description: "重载terracraftitems插件"
+  success: "§a重载成功"
 
-  # 信息
-  info:
-    description: "查看主手中物品的terra nbt或配置文件中的terra物品"
-    component_header: "§l§aterra自定义组件:"
+# 信息
+info:
+  description: "查看主手中物品的terra nbt或配置文件中的terra物品"
+  component_header: "§l§aterra自定义组件:"
 
-  # 获取
-  get:
-    description: "给予目标玩家terra物品"
-    success: "§a成功给予 %s §e%d§a 个物品: §9%s"
+# 获取
+get:
+  description: "给予目标玩家terra物品"
+  success: "§a成功给予 %s §e%d§a 个物品: §9%s"
 
-  # 帮助消息
-  help:
-    header: "§6=== TerraCraft帮助 ==="
-    main_command: "§b主命令: §f/terracraftitems"
-    format: "§f%s - %s"
+# 帮助消息
+help:
+  header: "§6=== TerraCraft帮助 ==="
+  main_command: "§b主命令: §f/terracraftitems"
+  format: "§f%s - %s"

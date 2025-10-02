@@ -77,7 +77,7 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
         PersistentDataContainer root = meta.getPersistentDataContainer();
         PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
         if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        container.remove(DURABILITY_KEY);
+        // 如果先remove，则更新的收就无法继承值了
         container.set(DURABILITY_KEY, DurabilityComponentDataType.INSTANCE, this);
         root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
         /* 默认原版不可破坏 */

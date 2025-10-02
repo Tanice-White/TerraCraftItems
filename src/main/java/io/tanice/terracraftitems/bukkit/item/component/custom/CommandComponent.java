@@ -48,7 +48,7 @@ public class CommandComponent extends AbstractCustomComponent implements TerraCo
         PersistentDataContainer root = meta.getPersistentDataContainer();
         PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
         if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        container.remove(COMMAND_KEY);
+        // 如果先remove，则更新的收就无法继承值了
         container.set(COMMAND_KEY, CommandComponentDataType.INSTANCE, this);
         root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
         item.setItemMeta(meta);

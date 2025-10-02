@@ -61,9 +61,9 @@ public class ItemUpdateListener implements Listener {
             TerraUpdateCodeComponent codeComponent = UpdateCodeComponent.from(item);
             TerraInnerNameComponent nameComponent = InnerNameComponent.from(item);
             if (codeComponent == null || nameComponent == null) continue;
-            TerraCraftItems.inst().getItemManager().getItem(nameComponent.getName()).ifPresent(baseItem -> {
+            TerraCraftItems.inst().getItemManager().getItem(nameComponent.getName()).ifPresent(terraItem -> {
                 ItemStack preItem = item.clone();
-                if (baseItem.updateOld(item)) {
+                if (terraItem.updateOld(item)) {
                     player.updateInventory();
                     Bukkit.getPluginManager().callEvent(new TerraItemUpdateEvent(player, nameComponent.getName(), preItem, item));
                 }

@@ -66,12 +66,12 @@ public class ItemDurabilityCommand extends CommandRunner {
         }
         Integer d = component.getDamage();
         switch (action) {
-            case "add" -> component.setDamage((d == null ? 0 : d) + value);
-            case "reduce" -> component.setDamage((d == null ? 0 : d) - value);
-            case "set" -> component.setDamage(value);
+            case "add" -> component.setDamage((d == null ? 0 : d) - value);
+            case "reduce" -> component.setDamage((d == null ? 0 : d) + value);
+            case "set" -> component.setDamage(component.getMaxDamage() - value);
         }
         component.cover(item);
-        sender.sendMessage(String.format(MessageManager.getMessage("durability.success"), component.getDamage()));
+        sender.sendMessage(String.format(MessageManager.getMessage("durability.success"), component.getMaxDamage() - component.getDamage()));
         return true;
     }
 

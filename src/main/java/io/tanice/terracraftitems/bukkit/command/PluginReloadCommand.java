@@ -1,6 +1,7 @@
 package io.tanice.terracraftitems.bukkit.command;
 
 import io.tanice.terracraftitems.bukkit.TerraCraftItems;
+import io.tanice.terracraftitems.core.message.MessageManager;
 import org.bukkit.command.CommandSender;
 
 public class PluginReloadCommand extends CommandRunner {
@@ -10,12 +11,13 @@ public class PluginReloadCommand extends CommandRunner {
     }
 
     public String getDescription() {
-        return "reload terracraftitems plugin";
+        return MessageManager.getMessage("command.reload.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         TerraCraftItems.inst().reload();
+        sender.sendMessage(MessageManager.getMessage("command.reload.success"));
         return true;
     }
 }

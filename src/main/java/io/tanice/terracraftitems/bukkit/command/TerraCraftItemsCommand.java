@@ -1,7 +1,6 @@
 package io.tanice.terracraftitems.bukkit.command;
 
-import io.tanice.terracraftitems.bukkit.command.item.ItemGetCommand;
-import io.tanice.terracraftitems.bukkit.command.item.ItemInfoCommand;
+import io.tanice.terracraftitems.core.message.MessageManager;
 import io.tanice.terracraftitems.core.util.logger.TerraCraftLogger;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,11 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-import static io.tanice.terracraftitems.bukkit.util.color.CommandColor.*;
+public class TerraCraftItemsCommand extends CommandGroup implements CommandExecutor, TabCompleter {
 
-public class TerraCraftCommand extends CommandGroup implements CommandExecutor, TabCompleter {
-
-    public TerraCraftCommand(JavaPlugin plugin) {
+    public TerraCraftItemsCommand(JavaPlugin plugin) {
         super(plugin);
     }
 
@@ -39,12 +36,9 @@ public class TerraCraftCommand extends CommandGroup implements CommandExecutor, 
 
     @Override
     protected void sendHelp(CommandSender sender) {
-        sender.sendMessage(GOLD + "=== TerraCraft Help ===");
-        sender.sendMessage(AQUA + "main command: " + WHITE + "/terracraftitems");
-        sender.sendMessage(AQUA + "sub commands:");
-        subCommands.values().forEach(cmd ->
-                sender.sendMessage(String.format(WHITE + "\t%s " + GRAY + "\t- %s", cmd.getName(), cmd.getDescription()))
-        );
+        sender.sendMessage( MessageManager.getMessage("command.help.header"));
+        sender.sendMessage(MessageManager.getMessage("command.help.main_command"));
+        super.sendHelp(sender);
     }
 
     @Override

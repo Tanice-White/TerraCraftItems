@@ -2,14 +2,13 @@ package io.tanice.terracraftitems.bukkit.command.item;
 
 import io.tanice.terracraftitems.bukkit.command.CommandRunner;
 import io.tanice.terracraftitems.bukkit.item.component.custom.DurabilityComponent;
+import io.tanice.terracraftitems.core.message.MessageManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
-
-import static io.tanice.terracraftitems.bukkit.util.color.CommandColor.*;
 
 public class ItemDurabilityCommand extends CommandRunner {
 
@@ -31,17 +30,17 @@ public class ItemDurabilityCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return "Manages terra_durability or ori_durability for TerraCraft items";
+        return MessageManager.getMessage("command.durability.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(RED + "This command can only be executed by players");
+            sender.sendMessage(MessageManager.getMessage("command.player_only"));
             return true;
         }
         if (args.length != 2) {
-            sender.sendMessage(RED + "Invalid number of arguments");
+            sender.sendMessage(MessageManager.getMessage("command.invalid_arguments"));
             return true;
         }
 
@@ -49,20 +48,20 @@ public class ItemDurabilityCommand extends CommandRunner {
         try {
             value = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(RED + "Invalid number format");
+            sender.sendMessage(MessageManager.getMessage("command.invalid_number"));
             return true;
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
-            sender.sendMessage(YELLOW + "You must hold an item in your main hand");
+            sender.sendMessage(MessageManager.getMessage("command.no_hold_item"));
             return true;
         }
 
         String action = args[0].toLowerCase();
         DurabilityComponent component = DurabilityComponent.from(item);
         if (component == null) {
-            sender.sendMessage(YELLOW + "Item has no terra_durability");
+            sender.sendMessage(MessageManager.getMessage("command.durability.blank"));
             return true;
         }
         Integer d = component.getDamage();
@@ -72,6 +71,7 @@ public class ItemDurabilityCommand extends CommandRunner {
             case "set" -> component.setDamage(value);
         }
         component.cover(item);
+        sender.sendMessage(String.format(MessageManager.getMessage("command.durability.success"), component.getDamage()));
         return true;
     }
 

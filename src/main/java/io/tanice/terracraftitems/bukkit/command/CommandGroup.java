@@ -1,5 +1,6 @@
 package io.tanice.terracraftitems.bukkit.command;
 
+import io.tanice.terracraftitems.core.message.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -7,8 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static io.tanice.terracraftitems.bukkit.util.color.CommandColor.*;
 
 public abstract class CommandGroup extends CommandNode {
     protected final JavaPlugin plugin;
@@ -50,23 +49,12 @@ public abstract class CommandGroup extends CommandNode {
 
         CommandNode node = subCommands.get(args[0].toLowerCase());
         if (node == null) {
-            sender.sendMessage(RED + "Unknown subcommand! Available commands:");
-
-            List<String> availableCommands = subCommands.values().stream()
-                    .filter(c -> c.hasPermission(sender))
-                    .map(CommandNode::getName)
-                    .sorted()
-                    .collect(Collectors.toList());
-            if (availableCommands.isEmpty()) {
-                sender.sendMessage(RED + "You don't have permission for any subcommands!");
-
-            } else sender.sendMessage(GREEN + String.join(GRAY + "," + GREEN, availableCommands));
+            sender.sendMessage(MessageManager.getMessage("command.unknown_command"));
             return true;
         }
 
         if (!node.hasPermission(sender)) {
-            sender.sendMessage(RED + "You don't have permission to execute this command!");
-            sender.sendMessage(RED + "Required permission: " + YELLOW + node.getPermission());
+            sender.sendMessage(String.format(MessageManager.getMessage("command.required_permission"), node.getPermission()));
             return true;
         }
 
@@ -95,7 +83,7 @@ public abstract class CommandGroup extends CommandNode {
 
     protected void sendHelp(CommandSender sender) {
         subCommands.values().forEach(cmd ->
-                sender.sendMessage(String.format(GRAY + ".../%s\n" + AQUA + "%s " + WHITE + "- %s", cmd.getName(), cmd.getUsage(), cmd.getDescription()))
+                sender.sendMessage(String.format(MessageManager.getMessage("command.help.format"), cmd.getName(), cmd.getDescription()))
         );
     }
 }

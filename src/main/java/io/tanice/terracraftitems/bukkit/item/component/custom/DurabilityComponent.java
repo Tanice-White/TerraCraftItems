@@ -117,7 +117,7 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
             return;
         }
         if (damage < 0) damage = 0;
-        else this.damage = Math.min(damage, this.maxDamage);
+        this.damage = Math.min(damage, this.maxDamage);
     }
 
     @Override

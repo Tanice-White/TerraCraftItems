@@ -4,14 +4,13 @@ import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.bukkit.TerraCraftItems;
 import io.tanice.terracraftitems.bukkit.command.CommandRunner;
 import io.tanice.terracraftitems.bukkit.item.ComponentFactory;
+import io.tanice.terracraftitems.core.message.MessageManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
-
-import static io.tanice.terracraftitems.bukkit.util.color.CommandColor.*;
 
 public class ItemInfoCommand extends CommandRunner {
     @Override
@@ -29,41 +28,43 @@ public class ItemInfoCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return "check terra nbt of the item in mainhand or a terra item in config file";
+        return MessageManager.getMessage("command.info.description");
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length > 1) {
-            sender.sendMessage(RED + "Invalid number of arguments");
-            return true;
-        }
-        /* 配置物品信息查询 */
-        if (args.length == 1) {
-            TerraCraftItems.inst().getItemManager().getItem(args[0])
-                    .ifPresentOrElse(terraItem -> sender.sendMessage(terraItem.toString()), () -> sender.sendMessage(RED + "No terra named " + args[0]));
+            sender.sendMessage(MessageManager.getMessage("command.invalid_arguments"));
             return true;
         }
 
-        /* 主手物品信息查询 */
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(RED + "This command can only be executed by players");
+        if (args.length == 1) {
+            TerraCraftItems.inst().getItemManager().getItem(args[0])
+                    .ifPresentOrElse(
+                            terraItem -> sender.sendMessage(terraItem.toString()),
+                            () -> sender.sendMessage(String.format(MessageManager.getMessage("command.item_not_found"), args[0]))
+                    );
             return true;
         }
+
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(MessageManager.getMessage("command.player_only"));
+            return true;
+        }
+
         ItemStack item = player.getInventory().getItemInMainHand();
         if (item.getType().isAir()) {
-            sender.sendMessage(YELLOW + "You must hold an item in your main hand");
+            sender.sendMessage(MessageManager.getMessage("command.no_hold_item"));
             return true;
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(BOLD).append(GREEN).append("Terra Components in the item").append(RESET).append("\n");
+        sb.append(MessageManager.getMessage("command.info.component_header")).append("\n");
         List<TerraBaseComponent> components = ComponentFactory.inst().getCustomComponentsFrom(item);
         for (int i = 0; i < components.size(); i++) {
             sb.append(components.get(i));
             if (i != components.size() - 1) sb.append("\n");
         }
-        sb.append(RESET);
         sender.sendMessage(sb.toString());
         return true;
     }

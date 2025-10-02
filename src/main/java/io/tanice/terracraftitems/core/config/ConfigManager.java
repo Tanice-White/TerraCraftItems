@@ -24,6 +24,7 @@ public final class ConfigManager {
 
     private static double version;
     private static boolean debug;
+    private static String language;
     private static boolean generateExamples;
     private static Map<String, Boolean> oriUpdateConfigMap;
 
@@ -37,6 +38,7 @@ public final class ConfigManager {
 
         version = cfg.getDouble("VERSION", -1);
         debug = cfg.getBoolean("DEBUG", false);
+        language = cfg.getString("LANGUAGE", "EN");
         generateExamples = cfg.getBoolean("generate_examples", true);
 
         oriUpdateConfigMap = new HashMap<>();
@@ -59,6 +61,10 @@ public final class ConfigManager {
 
     public static boolean isDebug() {
         return debug;
+    }
+
+    public static String getLanguage() {
+        return language;
     }
 
     public static boolean shouldGenerateExamples() {

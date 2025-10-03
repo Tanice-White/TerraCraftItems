@@ -16,7 +16,7 @@ dependencies {
 // 生成最终插件Jar
 shadowJar {
     archiveFileName.set("TerraCraftItems-${version}.jar")
-    from project(':api').sourceSets.main.output
+    from project(':api')
     mergeServiceFiles()
 }
 

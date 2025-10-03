@@ -15,14 +15,11 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
-            groupId = project.group
-            artifactId = 'terracraftitems-api'  // API专属artifactId
-            version = project.version
+            artifactId = 'terracraftitems-api'
         }
     }
     repositories {
-        // 发布到本地Maven仓库（测试用）
+        mavenCentral()
         mavenLocal()
     }
 }

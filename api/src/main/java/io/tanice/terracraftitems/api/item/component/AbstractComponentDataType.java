@@ -79,12 +79,14 @@ public abstract class AbstractComponentDataType<T extends AbstractCustomComponen
     protected abstract void writeToContainer(PersistentDataContainer container, T component);
 
     /**
-     * 从PersistentDataContainer读取数据并构建组件
+     * 从PersistentDataContainer读取数据并构建组件,默认所有的数据都有，必须返回非空值
+     * 如果判断出重要数据缺失，建议抛出异常
      * <p>
      * 子类需实现此方法以完成具体属性的反序列化
      *
      * @param container 包含组件数据的容器，非空
      * @return 构建的组件对象，非空
      */
+    @Nonnull
     protected abstract T readFromContainer(PersistentDataContainer container);
 }

@@ -28,6 +28,7 @@ public class CommandComponentDataType extends AbstractComponentDataType<CommandC
     }
 
     @Override
+    @Nonnull
     protected CommandComponent readFromContainer(PersistentDataContainer container) {
         String[] commands = container.get(CONTENT_KEY, StringArray.INSTANCE);
         ComponentState state = new ComponentState(container.get(STATE_KEY, PersistentDataType.BYTE));

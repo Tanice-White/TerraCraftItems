@@ -5,8 +5,8 @@ import io.tanice.terracraftitems.api.item.TerraItem;
 import io.tanice.terracraftitems.api.item.TerraItemManager;
 import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.ComponentFactory;
-import io.tanice.terracraftitems.paper.item.ItemProvider;
 import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -32,7 +32,7 @@ public final class ItemManager implements TerraItemManager {
         this.provider = new ItemProvider();
         this.componentFactory = ComponentFactory.inst();
         this.items = new ConcurrentHashMap<>();
-        this.loadResource();
+        Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), this::loadResource, 1L);
     }
 
     public void reload() {

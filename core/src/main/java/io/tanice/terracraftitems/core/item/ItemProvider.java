@@ -1,7 +1,8 @@
-package io.tanice.terracraftitems.paper.item;
+package io.tanice.terracraftitems.core.item;
 
 import io.tanice.terracraftitems.api.item.TerraItem;
 
+import io.tanice.terracraftitems.paper.item.Item;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Optional;

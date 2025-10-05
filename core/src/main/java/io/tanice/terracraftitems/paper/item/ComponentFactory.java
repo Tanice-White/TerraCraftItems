@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +26,6 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     private final Map<String, Function<ConfigurationSection, ? extends TerraBaseComponent>> creators = new ConcurrentHashMap<>();
     private final Map<String, Consumer<ItemStack>> removers = new ConcurrentHashMap<>();
-    private final Map<String, Function<ItemStack, ? extends TerraBaseComponent>> from_creators = new ConcurrentHashMap<>();
 
     private ComponentFactory() {
         registerAllComponents();
@@ -45,17 +43,14 @@ public final class ComponentFactory implements TerraComponentFactory {
     public <T extends TerraBaseComponent> void register(
             @Nonnull String componentName,
             @Nonnull Function<ConfigurationSection, T> creator,
-            @Nonnull Function<ItemStack, T> from_creator,
             @Nonnull Consumer<ItemStack> remover
     ) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
         Objects.requireNonNull(creator, "Component creator cannot be null");
         Objects.requireNonNull(remover, "Component remover cannot be null");
-        Objects.requireNonNull(from_creator, "Component from creator cannot be null");
 
         creators.put(componentName, creator);
         removers.put(componentName, remover);
-        from_creators.put(componentName, from_creator);
     }
 
     @Override
@@ -63,19 +58,8 @@ public final class ComponentFactory implements TerraComponentFactory {
     public TerraBaseComponent create(@Nonnull String componentName, @Nullable ConfigurationSection cfg) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
         Function<ConfigurationSection, ? extends TerraBaseComponent> creator = creators.get(componentName);
-        return creator != null ? creator.apply(cfg) : null;
-    }
 
-    @Override
-    @Nonnull
-    public List<TerraBaseComponent> getCustomComponentsFrom(@Nonnull ItemStack item) {
-        List<TerraBaseComponent> components = new ArrayList<>();
-        TerraBaseComponent c;
-        for (Function<ItemStack, ? extends TerraBaseComponent> from_creator : from_creators.values()) {
-            c = from_creator.apply(item);
-            if (c != null) components.add(c);
-        }
-        return components;
+        return creator != null ? creator.apply(cfg) : null;
     }
 
     @Override
@@ -92,7 +76,16 @@ public final class ComponentFactory implements TerraComponentFactory {
     @Override
     public boolean isRegistered(@Nonnull String componentName) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
+
         return creators.containsKey(componentName);
+    }
+
+    @Override
+    public void unRegister(@Nonnull String componentName) {
+        Objects.requireNonNull(componentName, "Component name cannot be null");
+
+        creators.remove(componentName);
+        removers.remove(componentName);
     }
 
     @Override
@@ -115,21 +108,6 @@ public final class ComponentFactory implements TerraComponentFactory {
             }
             if (cfg.isSet("!" + componentName)) remove(componentName, bukkitItem);
         }
-    }
-
-    /**
-     * 内部使用（注册原版类）
-     */
-    private <T extends TerraBaseComponent> void register(
-            @Nonnull String componentName,
-            @Nonnull Function<ConfigurationSection, T> creator,
-            @Nonnull Consumer<ItemStack> remover
-    ) {
-        Objects.requireNonNull(componentName, "Component name cannot be null");
-        Objects.requireNonNull(creator, "Component creator cannot be null");
-        Objects.requireNonNull(remover, "Component remover cannot be null");
-        creators.put(componentName, creator);
-        removers.put(componentName, remover);
     }
 
     /**
@@ -165,10 +143,10 @@ public final class ComponentFactory implements TerraComponentFactory {
         register("weapon", WeaponComponent::new, WeaponComponent::remove);
 
         /* custom */
-        register("command", CommandComponent::new, CommandComponent::from, CommandComponent::remove);
+        register("command", CommandComponent::new, CommandComponent::remove);
         /* 在 lore 组件之后 */
-        register("terra_durability", DurabilityComponent::new, DurabilityComponent::from, DurabilityComponent::remove);
-        register("nbt", ExtraNBTComponent::new, ExtraNBTComponent::from, ExtraNBTComponent::remove);
+        register("terra_durability", DurabilityComponent::new, DurabilityComponent::remove);
+        register("nbt", ExtraNBTComponent::new, ExtraNBTComponent::remove);
         // innerName updateCode 由实例掌管
     }
 }

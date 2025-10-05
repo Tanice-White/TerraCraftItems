@@ -24,15 +24,15 @@ public interface TerraComponentFactory {
      * <br>
      * 2. 当YAML配置中组件对应的 {@code key} 值是基础数据类型（如: {@code component: "value"}），则cfg会传入整个物品的根配置节点，组件需在creator中自行通过key获取对应值（如 {@code cfg.getString("component")}）
      * <br>
+     *
+     * @param <T>           组件类型
      * @param componentName 组件名称
-     * @param creator 组件创建器函数
-     * @param remover 组件移除器函数
-     * @param <T> 组件类型
+     * @param creator       组件创建器函数
+     * @param remover       组件移除器函数
      */
     <T extends TerraBaseComponent> void register(
             @Nonnull String componentName,
             @Nonnull Function<ConfigurationSection, T> creator,
-            @Nonnull Function<ItemStack, T> from_creator,
             @Nonnull Consumer<ItemStack> remover
     );
 
@@ -44,14 +44,6 @@ public interface TerraComponentFactory {
      */
     @Nullable
     TerraBaseComponent create(@Nonnull String componentName, @Nullable ConfigurationSection cfg);
-
-    /**
-     * 获取物品上所有自定义组件实例
-     * @param item 目标物品
-     * @return 目标物品的自定义组件列表
-     */
-    @Nonnull
-    List<TerraBaseComponent> getCustomComponentsFrom(@Nonnull ItemStack item);
 
     /**
      * 移除物品上的组件
@@ -66,6 +58,12 @@ public interface TerraComponentFactory {
      * @return 如果已注册则返回 true
      */
     boolean isRegistered(@Nonnull String componentName);
+
+    /**
+     * 注销组件名称对应的组件
+     * @param componentName 组件的识别名称
+     */
+    void unRegister(@Nonnull String componentName);
 
     /**
      * 处理配置 并将所有相关组件添加到组件列表

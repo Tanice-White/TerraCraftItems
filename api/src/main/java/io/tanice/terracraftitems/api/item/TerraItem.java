@@ -32,7 +32,7 @@ public interface TerraItem {
     String getName();
 
     /**
-     * 更新旧的物品栈为当前物品的状态
+     * 更新旧的物品栈
      *
      * @param old 旧的物品栈实例
      * @return 如果更新成功返回 {@code true}，否则返回 {@code false}

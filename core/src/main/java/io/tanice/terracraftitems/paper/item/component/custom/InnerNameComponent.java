@@ -8,17 +8,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
 
-import static io.tanice.terracraftitems.core.util.color.CommandColor.*;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.TERRA_COMPONENT_KEY;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.TERRA_NAME_KEY;
 
-public class InnerNameComponent implements TerraInnerNameComponent {
-
-    private final String name;
-
-    public InnerNameComponent(String name) {
-        this.name = name;
-    }
+public record InnerNameComponent(String name) implements TerraInnerNameComponent {
 
     @Nullable
     public static InnerNameComponent from(ItemStack item) {
@@ -52,15 +45,5 @@ public class InnerNameComponent implements TerraInnerNameComponent {
     @Override
     public boolean canUpdate() {
         return false;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public String toString() {
-        return BOLD + YELLOW + "terra_name:" + name + RESET;
     }
 }

@@ -8,7 +8,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
 
-import static io.tanice.terracraftitems.core.util.color.CommandColor.*;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.TERRA_COMPONENT_KEY;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.UPDATE_CODE_KEY;
 
@@ -62,10 +61,5 @@ public class UpdateCodeComponent implements TerraUpdateCodeComponent {
     @Override
     public boolean canUpdate() {
         return false;
-    }
-
-    @Override
-    public String toString() {
-        return BOLD + YELLOW + "update_code:" + code + RESET;
     }
 }

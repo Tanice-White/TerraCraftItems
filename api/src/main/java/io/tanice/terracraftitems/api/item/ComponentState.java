@@ -56,9 +56,4 @@ public class ComponentState implements TerraComponentState {
         if (isUpdatable()) state |= 0b100;
         return state;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%3s", Integer.toBinaryString(toNbtByte())).replace(' ', '0');
-    }
 }

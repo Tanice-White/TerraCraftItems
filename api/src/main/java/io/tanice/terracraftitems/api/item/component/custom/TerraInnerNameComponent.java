@@ -13,5 +13,5 @@ public interface TerraInnerNameComponent extends TerraBaseComponent {
      *
      * @return 物品的内部名称字符串
      */
-    String getName();
+    String name();
 }

@@ -64,13 +64,4 @@ public interface TerraComponentState {
      * @return 包含状态信息的字节，不会返回 {@code null}
      */
     Byte toNbtByte();
-
-    /**
-     * 返回当前状态的二进制字符串表示（3位补零）。
-     * <p>
-     * 例如：原始状态为 {@code true}、其他为 {@code false}时，返回 {@code 001}
-     * @return 3位二进制字符串
-     */
-    @Override
-    String toString();
 }

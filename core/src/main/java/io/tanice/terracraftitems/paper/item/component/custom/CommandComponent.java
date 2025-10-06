@@ -11,11 +11,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
-import static io.tanice.terracraftitems.core.util.color.CommandColor.*;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.COMMAND_KEY;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.TERRA_COMPONENT_KEY;
 import static io.tanice.terracraftitems.paper.util.pdc.PDCUtil.getTerraContainer;
@@ -90,20 +87,5 @@ public class CommandComponent extends AbstractCustomComponent implements TerraCo
     @Override
     public String getComponentName() {
         return "command";
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(BOLD).append(YELLOW).append("command:").append("\n");
-        sb.append(AQUA).append("    ").append("content:").append("\n");
-        if (commands != null && commands.length > 0) {
-            List<String> commandList = Arrays.asList(commands);
-            for (int i = 0; i < commandList.size(); i++) {
-                sb.append("        ").append(WHITE).append(i + 1).append(" -> ").append(commandList.get(i)).append("\n");
-            }
-            sb.append(AQUA).append("    ").append("state:").append(WHITE).append(state).append(RESET);
-        }
-        return sb.toString();
     }
 }

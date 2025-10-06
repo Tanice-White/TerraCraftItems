@@ -8,6 +8,7 @@ import io.tanice.terracraftitems.paper.item.component.custom.ExtraNBTComponent;
 import io.tanice.terracraftitems.paper.item.component.vanilla.*;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,10 +25,14 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     private static final ComponentFactory INSTANCE = new ComponentFactory();
 
-    private final Map<String, Function<ConfigurationSection, ? extends TerraBaseComponent>> creators = new ConcurrentHashMap<>();
-    private final Map<String, Consumer<ItemStack>> removers = new ConcurrentHashMap<>();
+    private final Map<String, Function<ConfigurationSection, ? extends TerraBaseComponent>> creators;
+    private final Map<String, Function<ItemStack, ? extends TerraBaseComponent>> froms;
+    private final Map<String, Consumer<ItemStack>> removers;
 
     private ComponentFactory() {
+        creators = new ConcurrentHashMap<>();
+        froms = new ConcurrentHashMap<>();
+        removers = new ConcurrentHashMap<>();
         registerAllComponents();
     }
 
@@ -43,23 +48,41 @@ public final class ComponentFactory implements TerraComponentFactory {
     public <T extends TerraBaseComponent> void register(
             @Nonnull String componentName,
             @Nonnull Function<ConfigurationSection, T> creator,
+            @Nonnull Function<ItemStack, T> from,
             @Nonnull Consumer<ItemStack> remover
     ) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
         Objects.requireNonNull(creator, "Component creator cannot be null");
+        Objects.requireNonNull(from, "Component from cannot be null");
         Objects.requireNonNull(remover, "Component remover cannot be null");
 
+        if (creators.containsKey(componentName) || froms.containsKey(componentName) || removers.containsKey(componentName)) {
+            TerraLogger.error("Attempted to register component name: " + componentName);
+            return;
+        }
         creators.put(componentName, creator);
+        froms.put(componentName, from);
         removers.put(componentName, remover);
     }
 
     @Override
     @Nullable
-    public TerraBaseComponent create(@Nonnull String componentName, @Nullable ConfigurationSection cfg) {
+    public <T extends TerraBaseComponent> T create(@Nonnull String componentName, @Nullable ConfigurationSection cfg) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
-        Function<ConfigurationSection, ? extends TerraBaseComponent> creator = creators.get(componentName);
+        @SuppressWarnings("unchecked")
+        Function<ConfigurationSection, T> creator = (Function<ConfigurationSection, T>) creators.get(componentName);
 
         return creator != null ? creator.apply(cfg) : null;
+    }
+
+    @Override
+    @Nullable
+    public <T extends TerraBaseComponent> T from(@Nonnull String componentName, @Nonnull ItemStack item) {
+        Objects.requireNonNull(componentName, "Component name cannot be null");
+        Objects.requireNonNull(item, "Item cannot be null");
+        @SuppressWarnings("unchecked")
+        Function<ItemStack, T> from = (Function<ItemStack, T>) froms.get(componentName);
+        return from != null ? from.apply(item) : null;
     }
 
     @Override
@@ -68,9 +91,7 @@ public final class ComponentFactory implements TerraComponentFactory {
         Objects.requireNonNull(item, "Item cannot be null");
 
         Consumer<ItemStack> remover = removers.get(componentName);
-        if (remover != null) {
-            remover.accept(item);
-        }
+        if (remover != null) remover.accept(item);
     }
 
     @Override
@@ -110,6 +131,23 @@ public final class ComponentFactory implements TerraComponentFactory {
         }
     }
 
+    private  <T extends TerraBaseComponent> void register(
+            @Nonnull String componentName,
+            @Nonnull Function<ConfigurationSection, T> creator,
+            @Nonnull Consumer<ItemStack> remover
+    ) {
+        Objects.requireNonNull(componentName, "Component name cannot be null");
+        Objects.requireNonNull(creator, "Component creator cannot be null");
+        Objects.requireNonNull(remover, "Component remover cannot be null");
+
+        if (creators.containsKey(componentName) || removers.containsKey(componentName)) {
+            TerraLogger.error("Attempted to register component name: " + componentName);
+            return;
+        }
+        creators.put(componentName, creator);
+        removers.put(componentName, remover);
+    }
+
     /**
      * 注册所有内置组件
      */
@@ -143,10 +181,10 @@ public final class ComponentFactory implements TerraComponentFactory {
         register("weapon", WeaponComponent::new, WeaponComponent::remove);
 
         /* custom */
-        register("command", CommandComponent::new, CommandComponent::remove);
+        register("command", CommandComponent::new, CommandComponent::from, CommandComponent::remove);
         /* 在 lore 组件之后 */
-        register("terra_durability", DurabilityComponent::new, DurabilityComponent::remove);
-        register("nbt", ExtraNBTComponent::new, ExtraNBTComponent::remove);
+        register("terra_durability", DurabilityComponent::new, DurabilityComponent::from, DurabilityComponent::remove);
+        register("nbt", ExtraNBTComponent::new, ExtraNBTComponent::from, ExtraNBTComponent::remove);
         // innerName updateCode 由实例掌管
     }
 }

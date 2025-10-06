@@ -28,22 +28,33 @@ public interface TerraComponentFactory {
      * @param <T>           组件类型
      * @param componentName 组件名称
      * @param creator       组件创建器函数
+     * @param from          组件从物品初始化函数
      * @param remover       组件移除器函数
      */
     <T extends TerraBaseComponent> void register(
             @Nonnull String componentName,
             @Nonnull Function<ConfigurationSection, T> creator,
+            @Nonnull Function<ItemStack, T> from,
             @Nonnull Consumer<ItemStack> remover
     );
 
     /**
      * 根据组件名称和配置节点创建组件实例
-     * @param componentName 组件名称，用于标识需要创建的组件类型
-     * @param cfg 一个物品的配置文件
+     * @param componentName 组件名称
+     * @param cfg           一个物品的配置文件
      * @return 成功创建的组件实例，若组件未注册则返回null
      */
     @Nullable
-    TerraBaseComponent create(@Nonnull String componentName, @Nullable ConfigurationSection cfg);
+    <T extends TerraBaseComponent> T create(@Nonnull String componentName, @Nullable ConfigurationSection cfg);
+
+    /**
+     * 根据组件名称从物品中读取并初始化 custom 组件（原版组件无法读取）
+     * @param componentName 组件名称
+     * @param item          目标物品
+     * @return 成功创建的组件实例，若组件未注册则返回null
+     */
+    @Nullable
+    <T extends TerraBaseComponent> T from(@Nonnull String componentName, @Nonnull ItemStack item);
 
     /**
      * 移除物品上的组件

@@ -97,13 +97,6 @@ public abstract class AbstractCustomComponent implements TerraBaseComponent {
     }
 
     /**
-     * 获取支持游戏内指令页面显示的数据展示字符串
-     *
-     * @return 组件的字符串表示，非空
-     */
-    public abstract String toString();
-
-    /**
      * 将组件属性（包括状态和额外属性）写入物品
      * <p>
      * 子类需实现此方法以完成具体的属性覆盖逻辑

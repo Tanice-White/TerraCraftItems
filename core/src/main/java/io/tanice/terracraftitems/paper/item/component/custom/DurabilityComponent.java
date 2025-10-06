@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static io.tanice.terracraftitems.core.util.color.CommandColor.*;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.DURABILITY_KEY;
 import static io.tanice.terracraftitems.paper.util.constance.PDCKey.TERRA_COMPONENT_KEY;
 import static io.tanice.terracraftitems.paper.util.pdc.PDCUtil.getTerraContainer;
@@ -193,17 +192,6 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
     public boolean broken() {
         if (this.damage == null) return false;
         return this.damage >= this.maxDamage;
-    }
-
-    @Override
-    public String toString() {
-        return BOLD + YELLOW + "terra_durability:" + RESET + "\n" +
-                "    " + AQUA + "damage:" + WHITE + (damage != null ? damage : "null") + "\n" +
-                "    " + AQUA + "max_damage:" + WHITE + maxDamage + "\n" +
-                "    " + AQUA + "damage_per_use_expr:" + WHITE + damageExpr + "\n" +
-                "    " + AQUA + "break_loss:" + WHITE + isBreakLoss() + "\n" +
-                "    " + AQUA + "broken:" + WHITE + broken() + "\n" +
-                "    " + AQUA + "state:" + WHITE + state + RESET;
     }
 
     private void registerExpression() {

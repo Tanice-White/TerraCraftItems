@@ -81,8 +81,8 @@ public final class ItemManager implements TerraItemManager {
             TerraLogger.error("Items directory validation failed: " + itemDir + " is not a valid directory");
             return;
         }
-        try (Stream<Path> files = Files.list(itemDir)) {
-            files.forEach(file -> {
+        try (Stream<Path> files = Files.walk(itemDir)) {
+            files.filter(Files::isRegularFile).filter(f -> f.getFileName().toString().endsWith(".yml")).forEach(file -> {
                 String fileName = file.getFileName().toString();
                 if (fileName.endsWith(".yml")) {
                     ConfigurationSection section = YamlConfiguration.loadConfiguration(file.toFile());
@@ -97,7 +97,7 @@ public final class ItemManager implements TerraItemManager {
             });
             TerraLogger.success("Loaded " + provider.getTotal() + " items");
         } catch (IOException e) {
-            TerraLogger.error("Failed to load buffs from " + itemDir.toAbsolutePath() + " " + e.getMessage());
+            TerraLogger.error("Failed to load items from " + itemDir.toAbsolutePath() + " " + e.getMessage());
         }
     }
 }

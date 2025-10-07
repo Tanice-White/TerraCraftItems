@@ -17,7 +17,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import static io.tanice.terracraftitems.paper.util.EnumUtil.safeValueOf;
-import static io.tanice.terracraftitems.core.util.color.CommandColor.*;
 
 public class Item implements TerraItem {
     private final String name; // inner name component
@@ -83,18 +82,5 @@ public class Item implements TerraItem {
     @Override
     public int getHashCode() {
         return Objects.hash(name, material, amount, components);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(BOLD).append(GREEN).append("Terra Components in ").append(GREEN).append(name).append(RESET).append("\n");
-        sb.append(updateCodeComponent).append("\n");
-
-        for (TerraBaseComponent component : components) {
-            sb.append(component).append("\n");
-        }
-        sb.append(RESET);
-        return sb.toString();
     }
 }

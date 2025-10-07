@@ -1,6 +1,7 @@
 package io.tanice.terracraftitems.paper;
 
-import io.tanice.terracraftitems.api.TerraCraftItemsPlugin;
+import io.tanice.terracraftitems.api.TerraCraftItemsBukkit;
+import io.tanice.terracraftitems.api.TerraCraftItemsServer;
 import io.tanice.terracraftitems.api.item.TerraComponentFactory;
 import io.tanice.terracraftitems.api.item.TerraItemManager;
 import io.tanice.terracraftitems.paper.Listener.TerraListener;
@@ -15,7 +16,9 @@ import io.tanice.terracraftitems.paper.util.message.MessageManager;
 import io.tanice.terracraftitems.core.item.ItemManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class TerraCraftItems extends JavaPlugin implements TerraCraftItemsPlugin {
+import javax.annotation.Nonnull;
+
+public final class TerraCraftItems extends JavaPlugin implements TerraCraftItemsServer {
     private static TerraCraftItems instance;
     private ItemManager itemManager;
     private TerraListener terraListener;
@@ -24,6 +27,7 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
     @Override
     public void onLoad() {
         ComponentFactory.inst();
+        TerraCraftItemsBukkit.setServer(this);
     }
 
     @Override
@@ -69,6 +73,7 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
     }
 
     @Override
+    @Nonnull
     public TerraComponentFactory getComponentFactory() {
         return ComponentFactory.inst();
     }

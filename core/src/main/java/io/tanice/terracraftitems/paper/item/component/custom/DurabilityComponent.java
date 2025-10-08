@@ -109,9 +109,10 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
         item.setItemMeta(meta);
     }
 
+    /* damage 不能算入 */
     @Override
     public int hashCode() {
-        return Objects.hash(damage, maxDamage, breakLoss);
+        return Objects.hash(maxDamage, breakLoss);
     }
 
     @Override

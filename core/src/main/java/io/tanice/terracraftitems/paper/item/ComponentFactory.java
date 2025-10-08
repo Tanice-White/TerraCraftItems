@@ -2,9 +2,11 @@ package io.tanice.terracraftitems.paper.item;
 
 import io.tanice.terracraftitems.api.item.TerraComponentFactory;
 import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
+import io.tanice.terracraftitems.api.item.component.custom.TerraInnerNameComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.CommandComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.DurabilityComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.ExtraNBTComponent;
+import io.tanice.terracraftitems.paper.item.component.custom.InnerNameComponent;
 import io.tanice.terracraftitems.paper.item.component.vanilla.*;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
@@ -110,6 +112,18 @@ public final class ComponentFactory implements TerraComponentFactory {
     }
 
     @Override
+    @Nullable
+    public String getInnerNameComponent(@Nonnull ItemStack item) {
+        TerraInnerNameComponent component = InnerNameComponent.from(item);
+        return component == null ? null : component.name();
+    }
+
+    /**
+     * 处理配置 并将所有相关组件添加到组件列表
+     * @param cfg 配置节点
+     * @param components 组件记录列表
+     * @param bukkitItem 物品栈
+     */
     public void processComponents(
             @Nonnull ConfigurationSection cfg,
             @Nonnull List<TerraBaseComponent> components,

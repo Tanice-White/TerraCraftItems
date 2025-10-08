@@ -14,7 +14,6 @@ public final class TerraCraftItemsBukkit {
 
     /**
      * 在 onLoad() 完成组件注册
-     * @return
      */
     @Nonnull
     public static TerraComponentFactory getComponentFactory() {

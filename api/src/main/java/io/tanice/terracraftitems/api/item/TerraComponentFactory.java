@@ -77,14 +77,10 @@ public interface TerraComponentFactory {
     void unRegister(@Nonnull String componentName);
 
     /**
-     * 处理配置 并将所有相关组件添加到组件列表
-     * @param cfg 配置节点
-     * @param components 组件记录列表
-     * @param bukkitItem 物品栈
+     * 获取物品的插件内部名
+     * @param item 目标物品
+     * @return 物品的内部名，如果不是此插件物品则返回 {@code null}
      */
-    void processComponents(
-            @Nonnull ConfigurationSection cfg,
-            @Nonnull List<TerraBaseComponent> components,
-            @Nonnull ItemStack bukkitItem
-    );
+    @Nullable
+    String getInnerNameComponent(@Nonnull ItemStack item);
 }

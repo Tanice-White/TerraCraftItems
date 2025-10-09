@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -75,16 +76,8 @@ public class ItemDurabilityListener implements Listener {
         if (processDurability(player, item, 0, getOriDamagePerBlockInToolComponent(item))) event.setCancelled(true);
     }
 
-    /* 耐久监听-盾牌档伤害事件的优先级是high */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-//    public void onEntityDamageEvent(EntityDamageEvent event) {
-//        if (event.getCause()) return;
-//        if (event.getEntity() instanceof Player defender && defender.getGameMode() != GameMode.CREATIVE) {
-//            EntityEquipment equipment = defender.getEquipment();
-//            /* 护甲耐久减少 */
-//            for (ItemStack i : equipment.getArmorContents()) processDurability(defender, i, event.getFinalDamage(), equipmentDamage(event.getFinalDamage()));
-//        }
-//    }
+    /* 耐久监听*/
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         Entity entityAttacker = event.getDamager();
         Entity entityDefender = event.getEntity();
@@ -93,8 +86,8 @@ public class ItemDurabilityListener implements Listener {
         if (entityAttacker instanceof Player attacker) {
             if (attacker.getGameMode() != GameMode.CREATIVE) {
                 item = attacker.getInventory().getItemInMainHand();
-                /* 将伤害值为1 */
-                if (processDurability(attacker, item, event.getFinalDamage(), getOriDamagePerAttackInWeaponComponent(item))) event.setDamage(1);
+                /* 将伤害值为0 */
+                if (processDurability(attacker, item, event.getFinalDamage(), getOriDamagePerAttackInWeaponComponent(item))) event.setDamage(0);
             }
             /* 抛射物 */
         } else if (entityAttacker instanceof Projectile projectile) {

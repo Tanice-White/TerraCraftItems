@@ -27,14 +27,13 @@ public record InnerNameComponent(String name) implements TerraInnerNameComponent
 
     @Override
     public void cover(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer root = meta.getPersistentDataContainer();
-        PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
-        if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        container.set(TERRA_NAME_KEY, PersistentDataType.STRING, name);
-        root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer root = meta.getPersistentDataContainer();
+            PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
+            if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
+            container.set(TERRA_NAME_KEY, PersistentDataType.STRING, name);
+            root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
+        });
     }
 
     @Override

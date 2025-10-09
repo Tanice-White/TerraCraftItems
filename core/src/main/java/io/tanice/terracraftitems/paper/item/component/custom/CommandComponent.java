@@ -42,15 +42,14 @@ public class CommandComponent extends AbstractCustomComponent implements TerraCo
 
     @Override
     protected void doCover(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer root = meta.getPersistentDataContainer();
-        PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
-        if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        // 如果先remove，则更新的收就无法继承值了
-        container.set(COMMAND_KEY, CommandComponentDataType.INSTANCE, this);
-        root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer root = meta.getPersistentDataContainer();
+            PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
+            if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
+            // 如果先remove，则更新的收就无法继承值了
+            container.set(COMMAND_KEY, CommandComponentDataType.INSTANCE, this);
+            root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
+        });
     }
 
     @Nullable

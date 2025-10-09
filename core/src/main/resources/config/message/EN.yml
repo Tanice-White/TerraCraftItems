@@ -9,10 +9,10 @@ unknown_command: "§cUnknown command"
 required_permission: "§cRequired permission: §e%s"
 
 # 耐久度相关命令
-durability:
+terra_durability:
   description: "Manage item damage in terra_durability for terra items"
   success: "§aSuccessfully set damage to %d"
-  lore: "duration:<gray>%d/%d</gray>"
+  lore: "<gray>%d/%d</gray>"
   blank: "§eItem has no terra_durability component"
 
 # 重载命令

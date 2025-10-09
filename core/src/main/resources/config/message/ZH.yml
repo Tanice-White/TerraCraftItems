@@ -9,10 +9,10 @@ unknown_command: "§c未知命令"
 required_permission: "§c所需权限: §e%s"
 
 # 耐久度
-durability:
+terra_durability:
   description: "管理terra物品的terra_durability中的物品损伤值"
   success: "§a当前耐久%d"
-  lore: "耐久:<gray>%d/%d</gray>"
+  lore: "<gray>%d/%d</gray>"
   blank: "§e物品没有terra_durability组件"
 
 # 重载

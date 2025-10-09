@@ -353,6 +353,8 @@ TerraGem护甲值测试:
 头盔耐久测试:
   id: iron_helmet
   display_name: "<yellow>头盔耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -363,6 +365,8 @@ TerraGem护甲值测试:
 胸甲耐久测试:
   id: iron_chestplate
   display_name: "<yellow>胸甲耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -373,6 +377,8 @@ TerraGem护甲值测试:
 护腿耐久测试:
   id: iron_leggings
   display_name: "<yellow>护腿耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -383,6 +389,8 @@ TerraGem护甲值测试:
 靴子耐久测试:
   id: iron_boots
   display_name: "<yellow>靴子耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -393,6 +401,8 @@ TerraGem护甲值测试:
 工具耐久测试:
   id: wooden_axe
   display_name: "<yellow>工具耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -416,7 +426,7 @@ TerraGem护甲值测试:
   display_name: "<yellow>工具耐久测试"
   lore:
     - "<gray>我还支持原版的break_sound :)"
-    - "<gray>       -terra_durability"
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -433,6 +443,7 @@ TerraGem护甲值测试:
     - "<gradient:#FFD700:#8B4513>你的升级之路必定艰难()</gradient>"
     - "<red>玻璃大炮</red>"
     - "<gray>用升级材料即可, 没错就是我懒得写了</gray>"
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -453,6 +464,8 @@ TerraGem护甲值测试:
 弓耐久测试:
   id: bow
   display_name: "<yellow>弓耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0
@@ -465,6 +478,8 @@ TerraGem护甲值测试:
 弩耐久测试:
   id: crossbow
   display_name: "<yellow>弩耐久测试"
+  lore:
+    - "<blue>耐久值:{terra_durability}"
   max_stack_size: 1
   terra_durability:
     damage: 0

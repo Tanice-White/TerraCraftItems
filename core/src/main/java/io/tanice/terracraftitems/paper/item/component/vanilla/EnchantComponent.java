@@ -131,8 +131,9 @@ public class EnchantComponent implements TerraEnchantComponent {
         }
     }
 
+    /* 这里用的nbt，实现了增量覆盖 */
     @Override
-    public TerraBaseComponent updatePartial() {
+    public TerraBaseComponent updatePartial(ItemStack old) {
         return new EnchantComponent(this.enchantmentValue, null, null);
     }
 

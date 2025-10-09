@@ -45,4 +45,11 @@ public interface TerraItem {
      * @return 物品的哈希码值
      */
     int getHashCode();
+
+    /**
+     * 获取物品lore中目标占位符的下标
+     * @param componentName 对应占位组件名称作为占位符检索值
+     * @return index（不存在则返回 -1）
+     */
+    int getLorePlaceholderIdx(String componentName);
 }

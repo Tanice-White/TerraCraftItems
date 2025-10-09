@@ -33,14 +33,13 @@ public class UpdateCodeComponent implements TerraUpdateCodeComponent {
 
     @Override
     public void cover(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer root = meta.getPersistentDataContainer();
-        PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
-        if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        container.set(UPDATE_CODE_KEY, PersistentDataType.INTEGER, code);
-        root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer root = meta.getPersistentDataContainer();
+            PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
+            if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
+            container.set(UPDATE_CODE_KEY, PersistentDataType.INTEGER, code);
+            root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
+        });
     }
 
     @Override

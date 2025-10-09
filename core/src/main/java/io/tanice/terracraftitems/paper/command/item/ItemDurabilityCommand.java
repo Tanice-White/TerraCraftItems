@@ -30,7 +30,7 @@ public class ItemDurabilityCommand extends CommandRunner {
 
     @Override
     public String getDescription() {
-        return MessageManager.getMessage("durability.description");
+        return MessageManager.getMessage("terra_durability.description");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ItemDurabilityCommand extends CommandRunner {
         String action = args[0].toLowerCase();
         DurabilityComponent component = DurabilityComponent.from(item);
         if (component == null) {
-            sender.sendMessage(MessageManager.getMessage("durability.blank"));
+            sender.sendMessage(MessageManager.getMessage("terra_durability.blank"));
             return true;
         }
         Integer d = component.getDamage();
@@ -71,7 +71,7 @@ public class ItemDurabilityCommand extends CommandRunner {
             case "set" -> component.setDamage(component.getMaxDamage() - value);
         }
         component.cover(item);
-        sender.sendMessage(String.format(MessageManager.getMessage("durability.success"), component.getMaxDamage() - component.getDamage()));
+        sender.sendMessage(String.format(MessageManager.getMessage("terra_durability.success"), component.getMaxDamage() - component.getDamage()));
         return true;
     }
 

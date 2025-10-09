@@ -44,13 +44,13 @@ public interface TerraBaseComponent {
     }
 
     /**
-     * 更新组件时继承部分原有值
+     * 更新组件时继承部分原有值，建议返回新组件
      * <p>
      * 默认实现不继承任何值，直接返回当前组件实例
      *
      * @return 更新后的组件实例，非空
      */
-    default TerraBaseComponent updatePartial() {
+    default TerraBaseComponent updatePartial(ItemStack old) {
         /* 默认不需要继承任何值 */
         return this;
     }

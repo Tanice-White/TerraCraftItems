@@ -94,12 +94,6 @@ public class DamageComponent implements TerraDamageComponent {
     }
 
     @Override
-    public TerraBaseComponent updatePartial() {
-        /* damage 主动设置为 null 不覆盖 */
-        return new DamageComponent(null, this.maxDamage, this.unbreakable);
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(damage, maxDamage, unbreakable);
     }

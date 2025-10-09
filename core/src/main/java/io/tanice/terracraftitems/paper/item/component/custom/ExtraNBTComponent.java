@@ -56,34 +56,32 @@ public class ExtraNBTComponent implements TerraExtraNBTComponent {
 
     @Override
     public void cover(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
         /* 移除额外的NBT */
         clear(item);
         /* 写入 */
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-        NamespacedKey k;
-        for (Map.Entry<String, String> entry : nbtMap.entrySet()) {
-            k = NamespacedKey.fromString(entry.getKey());
-            if (k == null) {
-                TerraLogger.warning("Invalid key: " + entry.getKey() + " in " + getComponentName() + " section");
-                continue;
+        item.editMeta(meta -> {
+            PersistentDataContainer container = meta.getPersistentDataContainer();
+            NamespacedKey k;
+            for (Map.Entry<String, String> entry : nbtMap.entrySet()) {
+                k = NamespacedKey.fromString(entry.getKey());
+                if (k == null) {
+                    TerraLogger.warning("Invalid key: " + entry.getKey() + " in " + getComponentName() + " section");
+                    continue;
+                }
+                container.set(k, PersistentDataType.STRING, entry.getValue());
             }
-            container.set(k, PersistentDataType.STRING, entry.getValue());
-        }
-        item.setItemMeta(meta);
+        });
     }
 
     public static void clear(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer container = meta.getPersistentDataContainer();
-        /* 移除额外的NBT */
-        for (NamespacedKey key : container.getKeys()) {
-            if (key.getNamespace().startsWith(PLUGIN_NAME)) continue;
-            container.remove(key);
-        }
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer container = meta.getPersistentDataContainer();
+            /* 移除额外的NBT */
+            for (NamespacedKey key : container.getKeys()) {
+                if (key.getNamespace().startsWith(PLUGIN_NAME)) continue;
+                container.remove(key);
+            }
+        });
     }
 
     public static void remove(ItemStack item) {

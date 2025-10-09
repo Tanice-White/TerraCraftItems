@@ -4,6 +4,8 @@ import io.tanice.terracraftitems.api.item.component.AbstractCustomComponent;
 import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.api.item.component.custom.TerraDurabilityComponent;
 import io.tanice.terracraftitems.api.item.ComponentState;
+import io.tanice.terracraftitems.api.item.component.custom.TerraInnerNameComponent;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.datatype.DurabilityComponentDataType;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.paper.util.config.ConfigManager;
@@ -13,12 +15,10 @@ import io.tanice.terracraftitems.paper.util.TerraExpression;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,17 +74,16 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
 
     @Override
     protected void doCover(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer root = meta.getPersistentDataContainer();
-        PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
-        if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
-        // 如果先remove，则更新的收就无法继承值了
-        container.set(DURABILITY_KEY, DurabilityComponentDataType.INSTANCE, this);
-        root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
-        /* 默认原版不可破坏 */
-        meta.setUnbreakable(true);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer root = meta.getPersistentDataContainer();
+            PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
+            if (container == null) container = root.getAdapterContext().newPersistentDataContainer();
+            // 这里也是全量更新
+            container.set(DURABILITY_KEY, DurabilityComponentDataType.INSTANCE, this);
+            root.set(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER, container);
+            /* 默认原版不可破坏 */
+            meta.setUnbreakable(true);
+        });
     }
 
     public static void clear(ItemStack item) {
@@ -97,16 +96,26 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
 
     @Override
     public void updateLore(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        List<Component> lore =  meta.lore();
-        int d = damage == null ? 0 : damage;
-
-        if (lore == null) lore = new ArrayList<>();
-        else lore.remove(lore.size() - 1);
-        lore.add(MiniMessageUtil.serialize(String.format(MessageManager.getMessage("durability.lore"), maxDamage - d, maxDamage)));
-        meta.lore(lore);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            TerraInnerNameComponent nameComponent = InnerNameComponent.from(item);
+            if (nameComponent == null) return;
+            TerraCraftItems.inst().getItemManager().getItem(nameComponent.name()).ifPresent(terraItem -> {
+                int idx = terraItem.getLorePlaceholderIdx(getComponentName());
+                if (idx == -1) return;
+                List<Component> lore = meta.lore();
+                if (lore == null) return;
+                /* 初始化 */
+                int d = damage == null ? 0 : damage;
+                String durabilityText = String.format(
+                        MessageManager.getMessage("terra_durability.lore"),
+                        maxDamage - d,
+                        maxDamage
+                );
+                /* 执行替换 */
+                lore.set(idx, MiniMessageUtil.serialize(durabilityText));
+                meta.lore(lore);
+            });
+        });
     }
 
     /* damage 不能算入 */
@@ -121,9 +130,11 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
     }
 
     @Override
-    public TerraBaseComponent updatePartial() {
+    public TerraBaseComponent updatePartial(ItemStack old) {
+        DurabilityComponent oldComponent = DurabilityComponent.from(old);
+        if (oldComponent == null) return this;
         /* 组件的初始值不能变，返回一个新的值，实现继承原本的数值 */
-        return new DurabilityComponent(null, this.maxDamage, this.breakLoss, this.damageExpr, this.state);
+        return new DurabilityComponent(oldComponent.damage, this.maxDamage, this.breakLoss, this.damageExpr, this.state);
     }
 
     @Override

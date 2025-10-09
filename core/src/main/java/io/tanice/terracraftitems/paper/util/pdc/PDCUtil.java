@@ -35,12 +35,11 @@ public final class PDCUtil {
      */
     public  static void removeSubTerraContainer(ItemStack item, NamespacedKey target) {
         Objects.requireNonNull(item, "item should not be null");
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        PersistentDataContainer root = meta.getPersistentDataContainer();
-        PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
-        if (container == null) return;
-        container.remove(target);
-        item.setItemMeta(meta);
+        item.editMeta(meta -> {
+            PersistentDataContainer root = meta.getPersistentDataContainer();
+            PersistentDataContainer container = root.get(TERRA_COMPONENT_KEY, PersistentDataType.TAG_CONTAINER);
+            if (container == null) return;
+            container.remove(target);
+        });
     }
 }

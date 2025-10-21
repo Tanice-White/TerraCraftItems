@@ -44,8 +44,6 @@
     -   `use_remainder`
     -   `weapon`
 
-    ![image-20251010130317255](C:\Users\25057\AppData\Roaming\Typora\typora-user-images\image-20251010130317255.png)
-
 -   **Additional Component Extensions**(Only the following additional components are supported. Other components in the configuration file are extended by the affiliated plugin under development):
 
     -    `terra_durability`: Custom durability management (does not support durability enchantments)
@@ -55,8 +53,6 @@
 
     -   `command`:Triggers specified commands when the item is consumed
         -   Use `@self` placeholder, which will be replaced with the user's name when executed
-
-![image-20251010130406958](C:\Users\25057\AppData\Roaming\Typora\typora-user-images\image-20251010130406958.png)
 
 ### 🛠️ Flexible Configuration System
 
@@ -81,17 +77,8 @@
     # 支持java的Math库，damage-目前的损伤值  max_damage 此物品最大损伤值  harm-武器或护甲则表示造成或承受的伤害，钓竿，弓，弩的值为0
     damage_per_use_expr: "Math.max(1, harm * (damage / max_damage + 1))"
   glint: true
- weapon:
+  weapon:
     damage_per_attack: 5  # 本插件支持识别，三叉戟也支持
-    
-# TerraCraftAttributes support
-  meta:
-    section: base
-    attribute:
-      attack_damage: 15
-# TerraCraftLevels support
-  level:
-    template: "带计算式的武器升级模板"
 ```
 
 ## 📋 Command Support
@@ -102,9 +89,6 @@
 | `/terracraftitems get <item name> [quantity]`         | Obtain custom items          | `terracraftitems.command.get`    |
 | `/terracraftitems durability <add|reduce|set> <value>`| Adjust item durability       | `terracraftitems.command`        |
 
-![image-20251010130243819](C:\Users\25057\AppData\Roaming\Typora\typora-user-images\image-20251010130243819.png)
-
 ## 💡 Plugin API
 
 -   **Provides component extension API**
-    -   The `meta` and other configurations in the example files are custom components extended by this plugin's companion [TerraCraftAttributes] (still in testing)

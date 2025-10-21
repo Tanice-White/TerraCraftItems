@@ -54,11 +54,11 @@ TerraCraftItems 是一款为 Minecraft 1.20+ 版本设计的高级物品定制�
 - 多语言支持（默认提供中文、英文），可自定义消息文本
 
 ## 📋 命令支持
-| 命令                                                  | 说明           | 权限                             |
-| :---------------------------------------------------- | -------------- | -------------------------------- |
+| 命令                                                    | 说明           | 权限                             |
+|:------------------------------------------------------| -------------- | -------------------------------- |
 | `/terracraftitems reload`                             | 重载插件配置   | `terracraftitems.command.reload` |
-| `/terracraftitems get <物品名> [数量]`                | 获取自定义物品 | `terracraftitems.command.get`    |
-| `/terracraftitems durability <add|reduce|set> <数值>` | 调整物品耐久度 | `terracraftitems.command`        |
+| `/terracraftitems get <物品名> [数量]`                     | 获取自定义物品 | `terracraftitems.command.get`    |
+| `/terracraftitems durability <add\|reduce\|set> <数值>` | 调整物品耐久度 | `terracraftitems.command`        |
 
 ## 💡 插件API
 - **提供组件拓展api**

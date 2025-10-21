@@ -83,11 +83,11 @@
 
 ## 📋 Command Support
 
-| Command                                               | Description                  | Permission                       |
-| :---------------------------------------------------- | :--------------------------- | :-------------------------------- |
-| `/terracraftitems reload`                             | Reload the plugin  | `terracraftitems.command.reload` |
-| `/terracraftitems get <item name> [quantity]`         | Obtain custom items          | `terracraftitems.command.get`    |
-| `/terracraftitems durability <add|reduce|set> <value>`| Adjust item durability       | `terracraftitems.command`        |
+| Command                                                  | Description                  | Permission                       |
+|:---------------------------------------------------------| :--------------------------- | :-------------------------------- |
+| `/terracraftitems reload`                                | Reload the plugin  | `terracraftitems.command.reload` |
+| `/terracraftitems get <item name> [quantity]`            | Obtain custom items          | `terracraftitems.command.get`    |
+| `/terracraftitems durability <add\|reduce\|set> <value>` | Adjust item durability       | `terracraftitems.command`        |
 
 ## 💡 Plugin API
 

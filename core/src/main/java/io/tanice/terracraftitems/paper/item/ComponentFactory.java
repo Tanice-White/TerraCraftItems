@@ -1,8 +1,10 @@
 package io.tanice.terracraftitems.paper.item;
 
+import io.tanice.terracraftitems.api.event.TerraCustomComponentLoadEvent;
 import io.tanice.terracraftitems.api.item.TerraComponentFactory;
 import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.api.item.component.custom.TerraInnerNameComponent;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.component.custom.CommandComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.DurabilityComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.ExtraNBTComponent;
@@ -11,6 +13,7 @@ import io.tanice.terracraftitems.paper.item.component.vanilla.*;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
 import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,6 +22,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -120,32 +124,43 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     /**
      * 处理配置 并将所有相关组件添加到组件列表
-     * @param cfg 配置节点
-     * @param components 组件记录列表
-     * @param bukkitItem 物品栈
+     * @param itemName      目标物品内部名
+     * @param cfg           配置节点
+     * @param components    组件记录列表
+     * @param bukkitItem    物品实例
      */
     public void processComponents(
+            @Nonnull String itemName,
             @Nonnull ConfigurationSection cfg,
             @Nonnull List<TerraBaseComponent> components,
             @Nonnull ItemStack bukkitItem
     ) {
+        Objects.requireNonNull(itemName, "Item inner name cannot be null");
         Objects.requireNonNull(cfg, "ConfigurationSection cannot be null");
         Objects.requireNonNull(components, "Components list cannot be null");
         Objects.requireNonNull(bukkitItem, "Bukkit item cannot be null");
 
-        for (String componentName : creators.keySet()) {
-            if (cfg.isSet(componentName)) {
-                /* key对应部分是section则传入对应section，否则传入整个物品的section，由register中的creator逻辑处理 */
-                TerraBaseComponent component = create(componentName, cfg.isConfigurationSection(componentName) ? cfg.getConfigurationSection(componentName) : cfg);
-                if (component == null) continue;
-                components.add(component);
-                component.cover(bukkitItem);
-            }
-            if (cfg.isSet("!" + componentName)) remove(componentName, bukkitItem);
+        String cname;
+        Set<String> keys = creators.keySet();
+        for (String key : cfg.getKeys(false)) {
+            boolean forRemoval = key.startsWith("!");
+            cname = forRemoval ? key.substring(1) : key;
+
+            if (keys.contains(key)) {
+                if (!forRemoval) {
+                    /* key对应部分是section则传入对应section，否则传入整个物品的section，由register中的creator逻辑处理 */
+                    TerraBaseComponent component = create(key, cfg.isConfigurationSection(key) ? cfg.getConfigurationSection(key) : cfg);
+                    if (component != null) {
+                        components.add(component);
+                        component.cover(bukkitItem);
+                    }
+                } else remove(cname, bukkitItem);
+                /* 不包含则触发事件 */
+            } else callEvent(itemName, key, cfg);
         }
     }
 
-    private  <T extends TerraBaseComponent> void register(
+    private <T extends TerraBaseComponent> void register(
             @Nonnull String componentName,
             @Nonnull Function<ConfigurationSection, T> creator,
             @Nonnull Consumer<ItemStack> remover
@@ -160,6 +175,13 @@ public final class ComponentFactory implements TerraComponentFactory {
         }
         creators.put(componentName, creator);
         removers.put(componentName, remover);
+    }
+
+    private void callEvent(String itemName, String key, ConfigurationSection itemCfg) {
+        ConfigurationSection sub = itemCfg.getConfigurationSection(key);
+        Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), () -> {
+            Bukkit.getPluginManager().callEvent(new TerraCustomComponentLoadEvent(itemName, sub != null ? sub : itemCfg));
+        }, 1L);
     }
 
     /**

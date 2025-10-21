@@ -49,7 +49,7 @@ public class Item implements TerraItem {
 
         this.components = new ArrayList<>();
         this.bukkitItem = new ItemStack(material, amount);
-        ComponentFactory.inst().processComponents(cfg, components, bukkitItem);
+        ComponentFactory.inst().processComponents(id, cfg, components, bukkitItem);
 
         this.innerNameComponent = new InnerNameComponent(id);
         this.innerNameComponent.cover(bukkitItem);

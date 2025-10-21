@@ -6,7 +6,6 @@ import io.tanice.terracraftitems.api.item.ComponentState;
 import io.tanice.terracraftitems.paper.item.datatype.CommandComponentDataType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 

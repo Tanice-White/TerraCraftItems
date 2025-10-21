@@ -113,7 +113,7 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     @Override
     @Nullable
-    public String getInnerNameComponent(@Nonnull ItemStack item) {
+    public String getInnerName(@Nonnull ItemStack item) {
         TerraInnerNameComponent component = InnerNameComponent.from(item);
         return component == null ? null : component.name();
     }

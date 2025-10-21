@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -82,5 +81,5 @@ public interface TerraComponentFactory {
      * @return 物品的内部名，如果不是此插件物品则返回 {@code null}
      */
     @Nullable
-    String getInnerNameComponent(@Nonnull ItemStack item);
+    String getInnerName(@Nonnull ItemStack item);
 }

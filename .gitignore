@@ -124,3 +124,6 @@ gradle/
 gradle.properties
 gradlew
 gradlew.bat
+
+TerraCrafItems-en.md
+TerraCraftItems-zh.md

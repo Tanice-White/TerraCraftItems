@@ -179,9 +179,7 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     private void callEvent(String itemName, String key, ConfigurationSection itemCfg) {
         ConfigurationSection sub = itemCfg.getConfigurationSection(key);
-        Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), () -> {
-            Bukkit.getPluginManager().callEvent(new TerraCustomComponentLoadEvent(itemName, sub != null ? sub : itemCfg));
-        }, 1L);
+        Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), () -> Bukkit.getPluginManager().callEvent(new TerraCustomComponentLoadEvent(itemName, key, sub != null ? sub : itemCfg)), 1L);
     }
 
     /**

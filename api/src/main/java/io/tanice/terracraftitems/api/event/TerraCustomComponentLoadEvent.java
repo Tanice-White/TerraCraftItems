@@ -12,11 +12,13 @@ public class TerraCustomComponentLoadEvent extends Event {
      * 如果在配置文件中，{@code key -> ConfigurationSection} 则参数为此 {@code key} 下的 {@code ConfigurationSection}
      * 否则参数为整个物品配置节点下的 {@code ConfigurationSection}
      */
-    private final ConfigurationSection cfg;
     private final String itemInnerName;
+    private final String componentKey;
+    private final ConfigurationSection cfg;
 
-    public TerraCustomComponentLoadEvent(@Nonnull String itemInnerName, @Nonnull ConfigurationSection cfg) {
+    public TerraCustomComponentLoadEvent(@Nonnull String itemInnerName, @Nonnull String componentKey, @Nonnull ConfigurationSection cfg) {
         this.itemInnerName = itemInnerName;
+        this.componentKey = componentKey;
         this.cfg = cfg;
     }
 
@@ -36,5 +38,10 @@ public class TerraCustomComponentLoadEvent extends Event {
     @Nonnull
     public String getItemInnerName() {
         return itemInnerName;
+    }
+
+    @Nonnull
+    public String getComponentKey() {
+        return componentKey;
     }
 }

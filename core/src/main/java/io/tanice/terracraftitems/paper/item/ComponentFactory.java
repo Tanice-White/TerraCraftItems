@@ -108,7 +108,7 @@ public final class ComponentFactory implements TerraComponentFactory {
     }
 
     @Override
-    public void unRegister(@Nonnull String componentName) {
+    public void unregister(@Nonnull String componentName) {
         Objects.requireNonNull(componentName, "Component name cannot be null");
 
         creators.remove(componentName);

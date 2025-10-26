@@ -73,7 +73,7 @@ public interface TerraComponentFactory {
      * 注销组件名称对应的组件
      * @param componentName 组件的识别名称
      */
-    void unRegister(@Nonnull String componentName);
+    void unregister(@Nonnull String componentName);
 
     /**
      * 获取物品的插件内部名

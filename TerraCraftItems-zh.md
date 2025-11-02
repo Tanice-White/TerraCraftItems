@@ -1,4 +1,4 @@
-# TerraCraftItems - 物品库
+# TerraCraftItems
 
 ## 🔍 插件概述
 TerraCraftItems 是一款为 Minecraft 1.20+ 版本设计的高级物品定制插件，通过组件化配置系统，允许服务器管理员管理员灵活管理员创建具有独特属性的自定义物品，适用于 RPG、生存、创意等多种服务器类型。

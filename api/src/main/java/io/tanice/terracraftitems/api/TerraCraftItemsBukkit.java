@@ -3,6 +3,7 @@ package io.tanice.terracraftitems.api;
 import io.tanice.terracraftitems.api.item.TerraComponentFactory;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 
 public final class TerraCraftItemsBukkit {
 
@@ -10,6 +11,13 @@ public final class TerraCraftItemsBukkit {
 
     private TerraCraftItemsBukkit() {
 
+    }
+
+    public static void setServer(@Nonnull TerraCraftItemsServer server) {
+        if (TerraCraftItemsBukkit.server != null) {
+            throw new UnsupportedOperationException("Cannot redefine singleton Server");
+
+        } else TerraCraftItemsBukkit.server = server;
     }
 
     /**
@@ -20,10 +28,8 @@ public final class TerraCraftItemsBukkit {
         return server.getComponentFactory();
     }
 
-    public static void setServer(@Nonnull TerraCraftItemsServer server) {
-        if (TerraCraftItemsBukkit.server != null) {
-            throw new UnsupportedOperationException("Cannot redefine singleton Server");
-
-        } else TerraCraftItemsBukkit.server = server;
+    @Nonnull
+    public static File getDataFolder() {
+        return server.getDataFolder();
     }
 }

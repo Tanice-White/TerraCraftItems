@@ -1,4 +1,4 @@
-# TerraCraftItems - Item Library
+# TerraCraftItems
 
 ## 🔍 Plugin Overview
 

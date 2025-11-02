@@ -15,11 +15,20 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId = 'terracraftitems-api' as Publication
+            artifactId = 'terracraftitems-api'
         }
     }
     repositories {
         mavenCentral()
         mavenLocal()
     }
+}
+
+javadoc {
+    // 指定读取源文件的编码为UTF-8
+    options.encoding = 'UTF-8'
+    // 指定生成Javadoc文档的编码为UTF-8（避免文档中中文乱码）
+    options.docEncoding = 'UTF-8'
+    // 指定文档注释的编码（可选，确保@param等注释中的中文正常显示）
+    options.charSet = 'UTF-8'
 }

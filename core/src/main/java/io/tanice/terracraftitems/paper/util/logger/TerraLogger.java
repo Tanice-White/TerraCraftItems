@@ -23,7 +23,7 @@ public final class TerraLogger {
     }
 
     public static void error(String message, Throwable throwable) {
-        TerraLogger.info(Level.SEVERE, ConsoleColor.RED + message + ConsoleColor.RESET, throwable);
+        TerraCraftItems.inst().getLogger().log(Level.SEVERE, ConsoleColor.RED + message + ConsoleColor.RESET, throwable);
     }
 
     public static void debug(String message) {

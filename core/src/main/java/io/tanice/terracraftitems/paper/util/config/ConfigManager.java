@@ -65,7 +65,7 @@ public final class ConfigManager {
         File targetFolder = TerraCraftItems.inst().getDataFolder();
         URL sourceUrl = TerraCraftItems.inst().getClass().getResource("");
         if (sourceUrl == null) {
-            TerraLogger.error("The plugin package is incomplete, please re_download it!");
+            TerraLogger.error("The plugin package is incomplete, please re_download it");
             return;
         }
 
@@ -78,10 +78,10 @@ public final class ConfigManager {
                     if (Files.isDirectory(source)) Files.createDirectory(targetPath);
                     else Files.copy(source, targetPath);
                 }
-                TerraLogger.success("Example config files generated successfully!");
+                TerraLogger.success("Example config files generated successfully");
             }
         } catch (IOException | URISyntaxException e) {
-            TerraLogger.error("Failed to load default example config file: " + e.getMessage());
+            TerraLogger.error("Failed to load default example config file", e);
         }
     }
 }

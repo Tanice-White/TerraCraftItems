@@ -54,7 +54,7 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
         MessageManager.unload();
 
         TerraLogger.success("TerraCraftItems disabled");
-        TerraLogger.success("Thank you for using TerraCraft plugin!");
+        TerraLogger.success("Thank you for using TerraCraft plugin");
         TerraLogger.success("If you have any questions or suggestions, feel free to share feedback :)");
     }
 

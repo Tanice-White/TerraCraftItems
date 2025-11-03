@@ -88,7 +88,7 @@ public final class ItemManager implements TerraItemManager {
                     ConfigurationSection section = YamlConfiguration.loadConfiguration(file.toFile());
                     for (String k : section.getKeys(false)) {
                         if (items.containsKey(k)) {
-                            TerraLogger.error("Existing item: " + k);
+                            TerraLogger.warning("Existing item: " + k);
                             continue;
                         }
                         provider.createItem(k, section.getConfigurationSection(k)).ifPresent(b -> items.put(k, b));
@@ -97,7 +97,7 @@ public final class ItemManager implements TerraItemManager {
             });
             TerraLogger.success("Loaded " + provider.getTotal() + " items");
         } catch (IOException e) {
-            TerraLogger.error("Failed to load items from " + itemDir.toAbsolutePath() + " " + e.getMessage());
+            TerraLogger.error("Failed to load items from " + itemDir.toAbsolutePath(), e);
         }
     }
 }

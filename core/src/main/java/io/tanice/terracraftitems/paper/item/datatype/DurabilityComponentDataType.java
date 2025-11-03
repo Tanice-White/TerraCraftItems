@@ -35,7 +35,7 @@ public class DurabilityComponentDataType extends AbstractComponentDataType<Durab
     protected DurabilityComponent readFromContainer(PersistentDataContainer container) {
         Integer maxDamage = container.get(MAX_DAMAGE_KEY, PersistentDataType.INTEGER);
         if (maxDamage == null) {
-            TerraLogger.error("Durability component(PDC) has no max damage!");
+            TerraLogger.error("Durability component(PDC) has no max damage");
             throw new IllegalArgumentException("PDC missing required max damage value");
         }
         return new DurabilityComponent(

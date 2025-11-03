@@ -39,7 +39,7 @@ public class TerraExpression {
         try {
             evaluator.cook(expression);
         } catch (CompileException e) {
-            TerraLogger.error("Failed to compile " + exprId + ": " + e.getMessage());
+            TerraLogger.error("Failed to compile " + exprId + ". ", e);
         }
         COMPILED_CACHE.putIfAbsent(exprId, evaluator);
     }

@@ -19,7 +19,11 @@ public final class TerraLogger {
     }
 
     public static void error(String message) {
-        TerraLogger.info(Level.WARNING, ConsoleColor.RED + message + ConsoleColor.RESET);
+        TerraLogger.info(Level.SEVERE, ConsoleColor.RED + message + ConsoleColor.RESET);
+    }
+
+    public static void error(String message, Throwable throwable) {
+        TerraLogger.info(Level.SEVERE, ConsoleColor.RED + message + ConsoleColor.RESET, throwable);
     }
 
     public static void debug(String message) {

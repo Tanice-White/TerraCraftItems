@@ -195,7 +195,7 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
             if (ConfigManager.isDebug()) TerraLogger.debug("expression: " + damageExpr + ", damage_per_use result=" + v);
             return (int) v;
         } catch (Exception e) {
-            TerraLogger.error("Error when calculating damage_per_use in terra durability component: " + damageExpr + ". \n" + e.getMessage());
+            TerraLogger.error("Error when calculating damage_per_use in terra durability component: " + damageExpr, e);
             return -1;
         }
     }
@@ -218,7 +218,7 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
                     new Class[]{int.class, int.class, double.class}
             );
         } catch (Exception e) {
-            TerraLogger.error("Failed to register damage_per_use_expr expression: " + damageExpr + "\n" + e.getMessage());
+            TerraLogger.error("Failed to register damage_per_use_expr expression: " + damageExpr, e);
         }
     }
 }

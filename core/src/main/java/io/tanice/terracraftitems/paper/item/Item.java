@@ -4,9 +4,9 @@ import io.tanice.terracraftitems.api.event.TerraItemSpawnEvent;
 import io.tanice.terracraftitems.api.item.TerraItem;
 import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.api.item.component.custom.TerraUpdateCodeComponent;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.component.custom.InnerNameComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.UpdateCodeComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -60,8 +60,7 @@ public class Item implements TerraItem {
     @Override
     public ItemStack getBukkitItem() {
         ItemStack item = bukkitItem.clone();
-        TerraItemSpawnEvent event = new TerraItemSpawnEvent(this, item);
-        Bukkit.getPluginManager().callEvent(event);
+        TerraItemSpawnEvent event = TerraCraftItems.inst().getEventBus().callAndReturn(new TerraItemSpawnEvent(this, item));
         if (event.isCancelled()) return new ItemStack(Material.AIR);
         return event.getBukkitItem();
     }

@@ -2,8 +2,8 @@ package io.tanice.terracraftitems.paper.item.datatype;
 
 import io.tanice.terracraftitems.api.item.component.AbstractComponentDataType;
 import io.tanice.terracraftitems.api.item.ComponentState;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.component.custom.DurabilityComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -35,7 +35,7 @@ public class DurabilityComponentDataType extends AbstractComponentDataType<Durab
     protected DurabilityComponent readFromContainer(PersistentDataContainer container) {
         Integer maxDamage = container.get(MAX_DAMAGE_KEY, PersistentDataType.INTEGER);
         if (maxDamage == null) {
-            TerraLogger.error("Durability component(PDC) has no max damage");
+            TerraCraftItems.inst().logger().error("Durability component(PDC) has no max damage");
             throw new IllegalArgumentException("PDC missing required max damage value");
         }
         return new DurabilityComponent(

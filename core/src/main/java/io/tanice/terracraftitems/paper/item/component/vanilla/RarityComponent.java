@@ -2,9 +2,9 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraRarityComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -27,7 +27,7 @@ public class RarityComponent implements TerraRarityComponent {
             NBT.modifyComponents(item, nbt ->{
                 if (rarity != null) nbt.setString(MINECRAFT_PREFIX + "rarity", rarity.name().toLowerCase());
             });
-        } else TerraLogger.warning("Rarity contents component is only supported in Minecraft 1.20.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Rarity contents component is only supported in Minecraft 1.20.5 or newer versions");
 
     }
 

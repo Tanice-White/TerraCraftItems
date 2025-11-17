@@ -4,10 +4,10 @@ import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraToolComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -56,7 +56,7 @@ public class ToolComponent implements TerraToolComponent {
                 ReadWriteNBT component = nbt.getOrCreateCompound(MINECRAFT_PREFIX + "tool");
                 if (canDestroyInCreative != null) {
                     if (ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_5)) component.setBoolean("can_destroy_blocks_in_creative", canDestroyInCreative);
-                    else TerraLogger.warning("can_destroy_blocks_in_creative in Tool component is only supported in Minecraft 1.21.5 or newer versions");
+                    else TerraCraftItems.inst().logger().warning("can_destroy_blocks_in_creative in Tool component is only supported in Minecraft 1.21.5 or newer versions");
                 }
                 if (damagePerBlock != null) component.setInteger("damage_per_block", damagePerBlock);
                 if (defaultMiningSpeed != null) component.setFloat("default_mining_speed", defaultMiningSpeed);
@@ -65,7 +65,7 @@ public class ToolComponent implements TerraToolComponent {
                 compoundList.clear();
                 for (DigConfig rule : rules) rule.addToCompound(compoundList.addCompound());
             });
-        } else TerraLogger.warning("Tool component is only supported in Minecraft 1.20.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Tool component is only supported in Minecraft 1.20.5 or newer versions");
     }
 
     @Override

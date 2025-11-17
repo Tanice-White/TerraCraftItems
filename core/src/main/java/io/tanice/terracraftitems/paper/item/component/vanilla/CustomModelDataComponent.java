@@ -2,9 +2,9 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTList;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraCustomModelDataComponent;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;

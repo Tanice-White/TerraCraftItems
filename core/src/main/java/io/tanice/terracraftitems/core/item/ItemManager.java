@@ -5,7 +5,6 @@ import io.tanice.terracraftitems.api.item.TerraItem;
 import io.tanice.terracraftitems.api.item.TerraItemManager;
 import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.ComponentFactory;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -78,7 +77,7 @@ public final class ItemManager implements TerraItemManager {
     private void loadResource() {
         Path itemDir = TerraCraftItems.inst().getDataFolder().toPath().resolve("items");
         if (!Files.exists(itemDir) || !Files.isDirectory(itemDir)) {
-            TerraLogger.error("Items directory validation failed: " + itemDir + " is not a valid directory");
+            TerraCraftItems.inst().logger().error("Items directory validation failed: " + itemDir + " is not a valid directory");
             return;
         }
         try (Stream<Path> files = Files.walk(itemDir)) {
@@ -88,16 +87,16 @@ public final class ItemManager implements TerraItemManager {
                     ConfigurationSection section = YamlConfiguration.loadConfiguration(file.toFile());
                     for (String k : section.getKeys(false)) {
                         if (items.containsKey(k)) {
-                            TerraLogger.warning("Existing item: " + k);
+                            TerraCraftItems.inst().logger().warning("Existing item: " + k);
                             continue;
                         }
                         provider.createItem(k, section.getConfigurationSection(k)).ifPresent(b -> items.put(k, b));
                     }
                 }
             });
-            TerraLogger.success("Loaded " + provider.getTotal() + " items");
+            TerraCraftItems.inst().logger().success("Loaded " + provider.getTotal() + " items");
         } catch (IOException e) {
-            TerraLogger.error("Failed to load items from " + itemDir.toAbsolutePath(), e);
+            TerraCraftItems.inst().logger().error("Failed to load items from " + itemDir.toAbsolutePath(), e);
         }
     }
 }

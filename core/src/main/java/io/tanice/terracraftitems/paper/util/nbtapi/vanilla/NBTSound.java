@@ -2,8 +2,8 @@ package io.tanice.terracraftitems.paper.util.nbtapi.vanilla;
 
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nullable;
@@ -30,7 +30,7 @@ public class NBTSound {
         Float range = cfg.isSet("range") ? (float) cfg.getDouble("range") : null;
         TerraNamespaceKey nk = TerraNamespaceKey.from(cfg.getString("id"));
         if (nk == null) {
-            TerraLogger.warning("Invalid sound id " + cfg.getString("id"));
+            TerraCraftItems.inst().logger().warning("Invalid sound id " + cfg.getString("id"));
             return null;
         }
         return new NBTSound(range, nk);

@@ -3,12 +3,12 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraBlocksAttacksComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTSound;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -74,7 +74,7 @@ public class BlocksAttacksComponent implements TerraBlocksAttacksComponent {
         for (String k : sub.getKeys(false)) {
             c = sub.getConfigurationSection(k);
             if (c == null) {
-                TerraLogger.warning("Empty reduction section in " + sub.getCurrentPath());
+                TerraCraftItems.inst().logger().warning("Empty reduction section in " + sub.getCurrentPath());
                 continue;
             }
             damageReductions.add(new DamageReduction(c));
@@ -121,7 +121,7 @@ public class BlocksAttacksComponent implements TerraBlocksAttacksComponent {
                 bsCompound.setFloat("factor", factor);
                 bsCompound.setFloat("threshold", threshold);
             });
-        } else TerraLogger.warning("Blocks attacks component is only supported in Minecraft 1.21.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Blocks attacks component is only supported in Minecraft 1.21.5 or newer versions");
     }
 
     @Override

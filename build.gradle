@@ -4,10 +4,11 @@ plugins {
 
 allprojects {
     group = 'io.tanice'
-    version = 'v1.0.3'
+    version = 'v1.0.4'
 
     repositories {
         mavenCentral()
+        mavenLocal()
         maven {
             name = "papermc-repo"
             url = "https://repo.papermc.io/repository/maven-public/"
@@ -28,10 +29,11 @@ subprojects {
     apply plugin: 'java'
 
     dependencies {
-        compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
+        compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+        compileOnly("io.tanice:terracraftcore-api:v1.0.0")
     }
 
-    def targetJavaVersion = 17
+    def targetJavaVersion = 25
     java {
         def javaVersion = JavaVersion.toVersion(targetJavaVersion)
         sourceCompatibility = javaVersion

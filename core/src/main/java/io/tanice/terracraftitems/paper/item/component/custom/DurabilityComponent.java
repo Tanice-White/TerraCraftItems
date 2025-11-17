@@ -9,7 +9,6 @@ import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.datatype.DurabilityComponentDataType;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.paper.util.config.ConfigManager;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.paper.util.message.MessageManager;
 import io.tanice.terracraftitems.paper.util.TerraExpression;
 import net.kyori.adventure.text.Component;
@@ -192,10 +191,10 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
         if (damageExpr == null || damageExpr.isBlank()) return -1;
         try {
             double v = (double) TerraExpression.calculate(damageExpr, new Object[]{this.damage, this.maxDamage, damage});
-            if (ConfigManager.isDebug()) TerraLogger.debug("expression: " + damageExpr + ", damage_per_use result=" + v);
+            if (ConfigManager.isDebug()) TerraCraftItems.inst().logger().debug("expression: " + damageExpr + ", damage_per_use result=" + v);
             return (int) v;
         } catch (Exception e) {
-            TerraLogger.error("Error when calculating damage_per_use in terra durability component: " + damageExpr, e);
+            TerraCraftItems.inst().logger().error("Error when calculating damage_per_use in terra durability component: " + damageExpr, e);
             return -1;
         }
     }
@@ -218,7 +217,7 @@ public class DurabilityComponent extends AbstractCustomComponent implements Terr
                     new Class[]{int.class, int.class, double.class}
             );
         } catch (Exception e) {
-            TerraLogger.error("Failed to register damage_per_use_expr expression: " + damageExpr, e);
+            TerraCraftItems.inst().logger().error("Failed to register damage_per_use_expr expression: " + damageExpr, e);
         }
     }
 }

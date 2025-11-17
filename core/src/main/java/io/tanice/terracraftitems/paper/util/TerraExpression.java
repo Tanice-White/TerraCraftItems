@@ -1,6 +1,6 @@
 package io.tanice.terracraftitems.paper.util;
 
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import org.codehaus.commons.compiler.CompileException;
 import org.codehaus.janino.ExpressionEvaluator;
 
@@ -39,7 +39,7 @@ public class TerraExpression {
         try {
             evaluator.cook(expression);
         } catch (CompileException e) {
-            TerraLogger.error("Failed to compile " + exprId + ". ", e);
+            TerraCraftItems.inst().logger().error("Failed to compile " + exprId + ". ", e);
         }
         COMPILED_CACHE.putIfAbsent(exprId, evaluator);
     }

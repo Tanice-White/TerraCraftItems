@@ -4,10 +4,10 @@ import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraDeathProtectionComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTEffect;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -48,7 +48,7 @@ public class DeathProtectionComponent implements TerraDeathProtectionComponent {
                     effect.addToCompound(component);
                 }
             });
-        } else TerraLogger.warning("death protection component is only supported in Minecraft 1.21.2 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("death protection component is only supported in Minecraft 1.21.2 or newer versions");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package io.tanice.terracraftitems.paper.command;
 
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.message.MessageManager;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +17,7 @@ public class TerraCraftItemsCommand extends CommandGroup implements CommandExecu
     public void enable() {
         PluginCommand command = plugin.getCommand("terracraftitems");
         if (command == null) {
-            TerraLogger.error("Main command(terracraftitems) not found");
+            TerraCraftItems.inst().logger().error("Main command(terracraftitems) not found");
             return;
         }
         command.setExecutor(this);

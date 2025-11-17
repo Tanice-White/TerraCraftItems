@@ -3,10 +3,10 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraUseRemainderComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,7 +44,7 @@ public class UseRemainderComponent implements TerraUseRemainderComponent {
                 if (counts != null) compound.setInteger("count", counts);
                 if (component != null) compound.getOrCreateCompound("components").mergeCompound(component);
             });
-        } else TerraLogger.warning("Use remainder component is only supported in Minecraft 1.21.2 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Use remainder component is only supported in Minecraft 1.21.2 or newer versions");
     }
 
     @Override

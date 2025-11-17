@@ -1,10 +1,10 @@
 name: TerraCraftItems
-version: '1.0.3'
+version: '1.0.4'
 main: io.tanice.terracraftitems.paper.TerraCraftItems
 api-version: '1.20'
 
 prefix: TerraCraftItems
-depend: [NBTAPI]
+depend: [TerraCraftCore, NBTAPI]
 
 commands:
   terracraftitems:

@@ -12,8 +12,6 @@ import io.tanice.terracraftitems.paper.item.component.custom.InnerNameComponent;
 import io.tanice.terracraftitems.paper.item.component.vanilla.*;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -63,7 +61,7 @@ public final class ComponentFactory implements TerraComponentFactory {
         Objects.requireNonNull(remover, "Component remover cannot be null");
 
         if (creators.containsKey(componentName) || froms.containsKey(componentName) || removers.containsKey(componentName)) {
-            TerraLogger.error("Attempted to register component name: " + componentName);
+            TerraCraftItems.inst().logger().error("Attempted to register component name: " + componentName);
             return;
         }
         creators.put(componentName, creator);
@@ -170,7 +168,7 @@ public final class ComponentFactory implements TerraComponentFactory {
         Objects.requireNonNull(remover, "Component remover cannot be null");
 
         if (creators.containsKey(componentName) || removers.containsKey(componentName)) {
-            TerraLogger.error("Attempted to register component name: " + componentName);
+            TerraCraftItems.inst().logger().error("Attempted to register component name: " + componentName);
             return;
         }
         creators.put(componentName, creator);
@@ -179,7 +177,7 @@ public final class ComponentFactory implements TerraComponentFactory {
 
     private void callEvent(String itemName, String key, ConfigurationSection itemCfg) {
         ConfigurationSection sub = itemCfg.getConfigurationSection(key);
-        Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), () -> Bukkit.getPluginManager().callEvent(new TerraCustomComponentLoadEvent(itemName, key, sub != null ? sub : itemCfg)), 1L);
+        TerraCraftItems.inst().getEventBus().callSync(new TerraCustomComponentLoadEvent(itemName, key, sub != null ? sub : itemCfg));
     }
 
     /**

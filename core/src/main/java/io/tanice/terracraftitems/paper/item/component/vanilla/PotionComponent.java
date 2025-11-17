@@ -4,11 +4,11 @@ import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraPotionComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTPotion;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.paper.util.ColorUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -70,15 +70,15 @@ public class PotionComponent implements TerraPotionComponent {
                     for (NBTPotion potion : potions) potion.addToCompound(compoundList.addCompound());
                 }
                 if (customName != null && ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_2)) component.setString("custom_name", customName);
-                else TerraLogger.warning("custom name in Potion contents component is only supported in Minecraft 1.21.2 or newer versions");
+                else TerraCraftItems.inst().logger().warning("custom name in Potion contents component is only supported in Minecraft 1.21.2 or newer versions");
                 if (id != null) component.setString("potion", id.get());
                 if (durationScale != null && ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_5)) {
                     nbt.setFloat(MINECRAFT_PREFIX + "potion_duration_scale", durationScale);
 
-                } else TerraLogger.warning("Potion duration scale component is only supported in Minecraft 1.21.5 or newer versions");
+                } else TerraCraftItems.inst().logger().warning("Potion duration scale component is only supported in Minecraft 1.21.5 or newer versions");
             });
 
-        } else TerraLogger.warning("Potion contents component is only supported in Minecraft 1.20.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Potion contents component is only supported in Minecraft 1.20.5 or newer versions");
     }
 
     @Override

@@ -1,11 +1,10 @@
 package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
-import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraDamageComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -50,7 +49,7 @@ public class DamageComponent implements TerraDamageComponent {
             NBT.modify(item, nbt -> {
                 if (unbreakable != null && unbreakable) nbt.setBoolean("Unbreakable", true);
                 if (damage != null) nbt.setInteger("Damage", damage);
-                if (maxDamage != null) TerraLogger.warning("Versions before 1.20.5 do not support setting max_damage. Only damage is configurable. Max damage uses default.");
+                if (maxDamage != null) TerraCraftItems.inst().logger().warning("Versions before 1.20.5 do not support setting max_damage. Only damage is configurable. Max damage uses default.");
             });
         }
     }

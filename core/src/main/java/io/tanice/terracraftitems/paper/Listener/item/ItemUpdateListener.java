@@ -1,12 +1,12 @@
 package io.tanice.terracraftitems.paper.Listener.item;
 
+import io.tanice.terracraftcore.api.event.TerraCraftEventBus;
 import io.tanice.terracraftitems.api.event.TerraItemUpdateEvent;
 import io.tanice.terracraftitems.api.item.component.custom.TerraInnerNameComponent;
 import io.tanice.terracraftitems.api.item.component.custom.TerraUpdateCodeComponent;
 import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.item.component.custom.InnerNameComponent;
 import io.tanice.terracraftitems.paper.item.component.custom.UpdateCodeComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +23,7 @@ public class ItemUpdateListener implements Listener {
     private final List<Player> checkPlayers = new ArrayList<>();
 
     public ItemUpdateListener() {
-        Bukkit.getScheduler().runTaskTimer(TerraCraftItems.inst(), () -> {
+        TerraCraftItems.inst().scheduler().sync().repeat(() -> {
             if (checkPlayers.isEmpty()) return;
             List<Player> checkPlayers = new ArrayList<>(this.checkPlayers);
             this.checkPlayers.clear();
@@ -31,6 +31,7 @@ public class ItemUpdateListener implements Listener {
                 if (player != null) checkAndUpdateItem(player, player.getInventory().getContents());
             }
         }, 20, 20);
+
         TerraCraftItems.inst().getServer().getPluginManager().registerEvents(this, TerraCraftItems.inst());
     }
 
@@ -56,6 +57,7 @@ public class ItemUpdateListener implements Listener {
      * 物品更新
      */
     private void checkAndUpdateItem(Player player, ItemStack... itemStacks) {
+        TerraCraftEventBus eventBus = TerraCraftItems.inst().getEventBus();
         for (ItemStack item : itemStacks) {
             if (item == null || item.getType().isAir()) continue;
             TerraUpdateCodeComponent codeComponent = UpdateCodeComponent.from(item);
@@ -65,7 +67,7 @@ public class ItemUpdateListener implements Listener {
                 ItemStack preItem = item.clone();
                 if (terraItem.updateOld(item)) {
                     player.updateInventory();
-                    Bukkit.getPluginManager().callEvent(new TerraItemUpdateEvent(player, nameComponent.name(), preItem, item));
+                    eventBus.callSync(new TerraItemUpdateEvent(player, nameComponent.name(), preItem, item));
                 }
             });
             return;

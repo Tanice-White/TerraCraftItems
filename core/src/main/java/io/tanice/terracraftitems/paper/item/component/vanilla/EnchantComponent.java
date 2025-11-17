@@ -5,10 +5,10 @@ import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
 import io.tanice.terracraftitems.api.item.component.TerraBaseComponent;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraEnchantComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -49,12 +49,12 @@ public class EnchantComponent implements TerraEnchantComponent {
         for (String enchant : list) {
             v = enchant.split(" ");
             if (v.length != 2) {
-                TerraLogger.warning("Invalid enchantments config in " + cfg.getCurrentPath());
+                TerraCraftItems.inst().logger().warning("Invalid enchantments config in " + cfg.getCurrentPath());
                 continue;
             }
             TerraNamespaceKey e = TerraNamespaceKey.from(v[0]);
             if (e == null) {
-                TerraLogger.warning("Invalid enchantments config in: " + cfg.getCurrentPath());
+                TerraCraftItems.inst().logger().warning("Invalid enchantments config in: " + cfg.getCurrentPath());
                 continue;
             }
             this.enchantments.add(e);
@@ -69,7 +69,7 @@ public class EnchantComponent implements TerraEnchantComponent {
                 if (enchantmentValue > 0) {
                     if (ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_2)) {
                         nbt.getOrCreateCompound(MINECRAFT_PREFIX + "enchantable").setInteger("value", enchantmentValue);
-                    } else TerraLogger.warning("Enchantable component is only supported in Minecraft 1.21.2 or newer versions");
+                    } else TerraCraftItems.inst().logger().warning("Enchantable component is only supported in Minecraft 1.21.2 or newer versions");
                 }
                 if (enchantments != null && levels != null && !enchantments.isEmpty() && !levels.isEmpty()) {
                     ReadWriteNBT subCompound = nbt.getOrCreateCompound(MINECRAFT_PREFIX + "enchantments");
@@ -94,7 +94,7 @@ public class EnchantComponent implements TerraEnchantComponent {
                     }
                 }
             });
-            if (enchantmentValue >= 0) TerraLogger.warning("Enchantable component is only supported in Minecraft 1.21.2 or newer versions");
+            if (enchantmentValue >= 0) TerraCraftItems.inst().logger().warning("Enchantable component is only supported in Minecraft 1.21.2 or newer versions");
         }
     }
 

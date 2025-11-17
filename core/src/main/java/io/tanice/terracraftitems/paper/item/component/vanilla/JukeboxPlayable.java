@@ -2,10 +2,10 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraJukeboxPlayable;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class JukeboxPlayable implements TerraJukeboxPlayable {
                     nbt.getOrCreateCompound(MINECRAFT_PREFIX + "jukebox_playable").setString("song", musicId.get());
                 }
             });
-        } else TerraLogger.warning("Jukebox playable component is only supported in Minecraft 1.21 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Jukebox playable component is only supported in Minecraft 1.21 or newer versions");
     }
 
     @Override

@@ -3,10 +3,10 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTList;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraRepairComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -56,7 +56,7 @@ public class RepairComponent implements TerraRepairComponent {
                     list.clear();
                     list.addAll(items.stream().map(TerraNamespaceKey::get).toList());
                 });
-            } else TerraLogger.warning("Repairable component is only supported in Minecraft 1.21.2 or newer versions");
+            } else TerraCraftItems.inst().logger().warning("Repairable component is only supported in Minecraft 1.21.2 or newer versions");
         }
     }
 

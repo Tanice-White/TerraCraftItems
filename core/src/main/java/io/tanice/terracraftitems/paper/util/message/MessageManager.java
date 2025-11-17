@@ -2,7 +2,6 @@ package io.tanice.terracraftitems.paper.util.message;
 
 import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.config.ConfigManager;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -15,7 +14,7 @@ public final class MessageManager {
     public static void load() {
         File messageFile = new File(new File(TerraCraftItems.inst().getDataFolder(), "message"), ConfigManager.getLanguage() + ".yml");
         if (!messageFile.exists()) {
-            TerraLogger.error("Could not find " + messageFile.getAbsolutePath());
+            TerraCraftItems.inst().logger().error("Could not find " + messageFile.getAbsolutePath());
             return;
         }
         messages = YamlConfiguration.loadConfiguration(messageFile);

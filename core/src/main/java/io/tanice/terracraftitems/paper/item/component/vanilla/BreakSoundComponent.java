@@ -1,12 +1,12 @@
 package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraBreakSoundComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTSound;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,7 +31,7 @@ public class BreakSoundComponent implements TerraBreakSoundComponent {
             NBT.modifyComponents(item, nbt -> {
                 if (sound != null) sound.addToCompound(nbt.getOrCreateCompound(MINECRAFT_PREFIX + "break_sound"));
             });
-        } else TerraLogger.warning("break sound component is only supported in Minecraft 1.21.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("break sound component is only supported in Minecraft 1.21.5 or newer versions");
     }
 
     @Override

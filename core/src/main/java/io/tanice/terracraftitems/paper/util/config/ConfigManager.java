@@ -1,7 +1,6 @@
 package io.tanice.terracraftitems.paper.util.config;
 
 import io.tanice.terracraftitems.paper.TerraCraftItems;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -65,7 +64,7 @@ public final class ConfigManager {
         File targetFolder = TerraCraftItems.inst().getDataFolder();
         URL sourceUrl = TerraCraftItems.inst().getClass().getResource("");
         if (sourceUrl == null) {
-            TerraLogger.error("The plugin package is incomplete, please re_download it");
+            TerraCraftItems.inst().logger().error("The plugin package is incomplete, please re_download it");
             return;
         }
 
@@ -78,10 +77,10 @@ public final class ConfigManager {
                     if (Files.isDirectory(source)) Files.createDirectory(targetPath);
                     else Files.copy(source, targetPath);
                 }
-                TerraLogger.success("Example config files generated successfully");
+                TerraCraftItems.inst().logger().success("Example config files generated successfully");
             }
         } catch (IOException | URISyntaxException e) {
-            TerraLogger.error("Failed to load default example config file", e);
+            TerraCraftItems.inst().logger().error("Failed to load default example config file", e);
         }
     }
 }

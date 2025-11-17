@@ -3,9 +3,9 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraTooltipComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +60,7 @@ public class TooltipComponent implements TerraTooltipComponent {
                     NBT.modifyComponents(item, nbt -> {
                         nbt.getOrCreateCompound(MINECRAFT_PREFIX + "hide_tooltip");
                     });
-                } else TerraLogger.warning("Hide tooltip component is only supported in Minecraft 1.20.5 or newer versions");
+                } else TerraCraftItems.inst().logger().warning("Hide tooltip component is only supported in Minecraft 1.20.5 or newer versions");
                 /* 1.20.5 - 1.21.4 之间不明, 使用meta */
                 if (hiddenComponents != null) {
                     NBT.modify(item, nbt -> {
@@ -77,7 +77,7 @@ public class TooltipComponent implements TerraTooltipComponent {
                 NBT.modifyComponents(item, nbt -> {
                     nbt.setString(MINECRAFT_PREFIX + "tooltip_style", tooltipStyle);
                 });
-            } else TerraLogger.warning("Tooltip style component is only supported in Minecraft 1.21.2 or newer versions");
+            } else TerraCraftItems.inst().logger().warning("Tooltip style component is only supported in Minecraft 1.21.2 or newer versions");
         }
     }
 

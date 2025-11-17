@@ -3,7 +3,7 @@ package io.tanice.terracraftitems.paper.util.nbtapi.vanilla;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTList;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import org.bukkit.configuration.ConfigurationSection;
 
 import javax.annotation.Nullable;
@@ -46,7 +46,7 @@ public class NBTEffect {
             case "play_sound":
                 NBTSound sound = NBTSound.form(cfg.getConfigurationSection("sound"));
                 if (sound == null) {
-                    TerraLogger.warning("Invalid sound: " + cfg.getString("sound") + " in " + cfg.getCurrentPath());
+                    TerraCraftItems.inst().logger().warning("Invalid sound: " + cfg.getString("sound") + " in " + cfg.getCurrentPath());
                     return null;
                 }
                 return new NBTEffect(type, chance, null, sound, null, null);
@@ -61,7 +61,7 @@ public class NBTEffect {
                 return new NBTEffect(type, chance, null, null, null, cfg.isSet("diameter") ? (float) cfg.getDouble("diameter") : null);
 
             default:
-                TerraLogger.warning("Invalid effect type: " + type + " in " + cfg.getCurrentPath());
+                TerraCraftItems.inst().logger().warning("Invalid effect type: " + type + " in " + cfg.getCurrentPath());
                 return null;
         }
     }
@@ -92,7 +92,7 @@ public class NBTEffect {
             case "teleport_randomly" -> {
                 if(diameter != null) compound.setFloat("diameter", diameter);
             }
-            default -> TerraLogger.warning("Invalid effect type: " + type);
+            default -> TerraCraftItems.inst().logger().warning("Invalid effect type: " + type);
         }
     }
 

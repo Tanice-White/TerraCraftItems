@@ -1,5 +1,9 @@
 package io.tanice.terracraftitems.paper;
 
+import io.tanice.terracraftcore.api.TerraCraftCoreBukkit;
+import io.tanice.terracraftcore.api.event.TerraCraftEventBus;
+import io.tanice.terracraftcore.api.logger.TerraCraftLogger;
+import io.tanice.terracraftcore.api.scheduler.TerraCraftScheduler;
 import io.tanice.terracraftitems.api.TerraCraftItemsBukkit;
 import io.tanice.terracraftitems.api.TerraCraftItemsServer;
 import io.tanice.terracraftitems.api.item.TerraComponentFactory;
@@ -11,7 +15,6 @@ import io.tanice.terracraftitems.paper.command.item.ItemDurabilityCommand;
 import io.tanice.terracraftitems.paper.command.item.ItemGetCommand;
 import io.tanice.terracraftitems.paper.item.ComponentFactory;
 import io.tanice.terracraftitems.paper.util.config.ConfigManager;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.paper.util.message.MessageManager;
 import io.tanice.terracraftitems.core.item.ItemManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,9 +22,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 
 public final class TerraCraftItems extends JavaPlugin implements TerraCraftItemsServer {
-    private static TerraCraftItems instance;
+    private static TerraCraftItems INSTANCE;
+
     private ItemManager itemManager;
+
     private TerraListener terraListener;
+
+    /* core */
+    private TerraCraftLogger logger;
+    private TerraCraftScheduler scheduler;
+    private TerraCraftEventBus eventBus;
+
     private TerraCraftItemsCommand terraCraftItemsCommand;
 
     @Override
@@ -32,7 +43,12 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+
+        logger = TerraCraftCoreBukkit.getLogger(this, "#62BDC4", "#D3AF73");
+        scheduler = TerraCraftCoreBukkit.scheduler();
+        eventBus = TerraCraftCoreBukkit.getEventBus();
+
         ConfigManager.load();
         MessageManager.load();
 
@@ -53,9 +69,7 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
         ConfigManager.unload();
         MessageManager.unload();
 
-        TerraLogger.success("TerraCraftItems disabled");
-        TerraLogger.success("Thank you for using TerraCraft plugin");
-        TerraLogger.success("If you have any questions or suggestions, feel free to share feedback :)");
+        TerraCraftCoreBukkit.removeLogger(this);
     }
 
     public void reload() {
@@ -65,7 +79,7 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
     }
 
     public static TerraCraftItems inst() {
-        return instance;
+        return INSTANCE;
     }
 
     public TerraItemManager getItemManager() {
@@ -76,5 +90,18 @@ public final class TerraCraftItems extends JavaPlugin implements TerraCraftItems
     @Nonnull
     public TerraComponentFactory getComponentFactory() {
         return ComponentFactory.inst();
+    }
+
+    /* core */
+    public TerraCraftLogger logger() {
+        return logger;
+    }
+
+    public TerraCraftScheduler scheduler() {
+        return scheduler;
+    }
+
+    public TerraCraftEventBus getEventBus() {
+        return eventBus;
     }
 }

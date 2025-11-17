@@ -1,7 +1,7 @@
 package io.tanice.terracraftitems.paper.item.component.custom;
 
 import io.tanice.terracraftitems.api.item.component.custom.TerraExtraNBTComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +65,7 @@ public class ExtraNBTComponent implements TerraExtraNBTComponent {
             for (Map.Entry<String, String> entry : nbtMap.entrySet()) {
                 k = NamespacedKey.fromString(entry.getKey());
                 if (k == null) {
-                    TerraLogger.warning("Invalid key: " + entry.getKey() + " in " + getComponentName() + " section");
+                    TerraCraftItems.inst().logger().warning("Invalid key: " + entry.getKey() + " in " + getComponentName() + " section");
                     continue;
                 }
                 container.set(k, PersistentDataType.STRING, entry.getValue());

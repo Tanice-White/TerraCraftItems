@@ -3,13 +3,13 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraConsumableComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTEffect;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTSound;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -64,7 +64,7 @@ public class ConsumableComponent implements TerraConsumableComponent {
                 if (animation != null) {
                     if (animation == Animation.BUNDLE) {
                         if (ServerVersion.isBefore(MinecraftVersions.v1_21_4)) {
-                            TerraLogger.warning("bundle value in animation is only supported in Minecraft 1.21.4 or newer versions. Use eat as default");
+                            TerraCraftItems.inst().logger().warning("bundle value in animation is only supported in Minecraft 1.21.4 or newer versions. Use eat as default");
                             component.setString("animation", Animation.EAT.name().toLowerCase());
                         }
                     } else component.setString("animation", animation.name().toLowerCase());
@@ -79,7 +79,7 @@ public class ConsumableComponent implements TerraConsumableComponent {
                 if (sound != null) sound.addToCompound(component.getOrCreateCompound("sound"));
             });
 
-        } else TerraLogger.warning("Consumable component is only supported in Minecraft 1.21.2 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Consumable component is only supported in Minecraft 1.21.2 or newer versions");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package io.tanice.terracraftitems.paper.util;
 
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 
 public final class EnumUtil {
     /**
@@ -17,7 +17,7 @@ public final class EnumUtil {
         try {
             return Enum.valueOf(enumClass, value.toUpperCase());
         } catch (IllegalArgumentException e2) {
-            TerraLogger.warning(value + "' is not a valid value, use default: " + defaultValue);
+            TerraCraftItems.inst().logger().warning(value + "' is not a valid value, use default: " + defaultValue);
             return defaultValue;
         }
     }

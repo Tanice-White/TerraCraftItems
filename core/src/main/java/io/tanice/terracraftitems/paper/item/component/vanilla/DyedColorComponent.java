@@ -2,9 +2,9 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraDyedColor;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.paper.util.ColorUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,7 +26,7 @@ public class DyedColorComponent implements TerraDyedColor {
             NBT.modifyComponents(item, nbt -> {
                 if (color != null) nbt.setInteger(MINECRAFT_PREFIX + "dyed_color", color);
             });
-        } else TerraLogger.warning("Dye color component is only supported in Minecraft 1.20.5 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Dye color component is only supported in Minecraft 1.20.5 or newer versions");
     }
 
     @Override

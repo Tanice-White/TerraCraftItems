@@ -2,9 +2,9 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 
 import de.tr7zw.nbtapi.NBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraMaxStackSizeComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -24,7 +24,7 @@ public class MaxStackSizeComponent implements TerraMaxStackSizeComponent {
             NBT.modifyComponents(item, nbt -> {
                 if (size != null) nbt.setInteger(MINECRAFT_PREFIX + "max_stack_size", size);
             });
-        } else TerraLogger.warning("Modifying max stack size is not supported in this Minecraft version. This feature requires 1.20.5 or later.");
+        } else TerraCraftItems.inst().logger().warning("Modifying max stack size is not supported in this Minecraft version. This feature requires 1.20.5 or later.");
     }
 
     @Override

@@ -3,12 +3,12 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBTCompoundList;
+import io.tanice.terracraftcore.api.attribute.BukkitAttribute;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraAttributeModifiersComponent;
-import io.tanice.terracraftitems.paper.util.adapter.BukkitAttribute;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
 import io.tanice.terracraftitems.paper.util.MiniMessageUtil;
 import io.tanice.terracraftitems.api.slot.TerraEquipmentSlot;
 import net.kyori.adventure.text.Component;
@@ -37,12 +37,12 @@ public class AttributeModifiersComponent implements TerraAttributeModifiersCompo
         ConfigurationSection sub;
         for (String key : cfg.getKeys(false)) {
             if (key.isBlank()) {
-                TerraLogger.warning("Attribute modifier cannot have a blank key");
+                TerraCraftItems.inst().logger().warning("Attribute modifier cannot have a blank key");
                 continue;
             }
             sub = cfg.getConfigurationSection(key);
             if (sub == null) {
-                TerraLogger.warning("Invalid Attribute format under: " + key);
+                TerraCraftItems.inst().logger().warning("Invalid Attribute format under: " + key);
                 return;
             }
             modifiers.add(new AttributeModifierComponent(
@@ -87,7 +87,7 @@ public class AttributeModifiersComponent implements TerraAttributeModifiersCompo
                             ReadWriteNBT dComponent = component.getOrCreateCompound("display");
                             dComponent.setString("type", modifier.displayType.name().toLowerCase());
                             dComponent.setString("value", MiniMessageUtil.toNBTJson(modifier.extraValue));
-                        } else TerraLogger.warning("display in attribute modifiers component is only supported in Minecraft 1.21.5 or newer versions");
+                        } else TerraCraftItems.inst().logger().warning("display in attribute modifiers component is only supported in Minecraft 1.21.5 or newer versions");
                     }
                     if (modifier.slot != null && modifier.slot != TerraEquipmentSlot.ANY) component.setString("slot", modifier.slot.getStandardName());
                 }

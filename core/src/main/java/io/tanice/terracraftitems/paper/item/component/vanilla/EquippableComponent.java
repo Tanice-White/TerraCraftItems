@@ -3,11 +3,11 @@ package io.tanice.terracraftitems.paper.item.component.vanilla;
 import de.tr7zw.nbtapi.NBT;
 import de.tr7zw.nbtapi.iface.ReadWriteNBT;
 import io.tanice.terracraftitems.api.item.component.vanilla.TerraEquippableComponent;
-import io.tanice.terracraftitems.paper.util.logger.TerraLogger;
 import io.tanice.terracraftitems.core.util.namespace.TerraNamespaceKey;
+import io.tanice.terracraftitems.paper.TerraCraftItems;
 import io.tanice.terracraftitems.paper.util.nbtapi.vanilla.NBTSound;
-import io.tanice.terracraftitems.paper.util.version.MinecraftVersions;
-import io.tanice.terracraftitems.paper.util.version.ServerVersion;
+import io.tanice.terracraftcore.api.version.MinecraftVersions;
+import io.tanice.terracraftcore.api.version.ServerVersion;
 import io.tanice.terracraftitems.api.slot.TerraEquipmentSlot;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -90,7 +90,7 @@ public class EquippableComponent implements TerraEquippableComponent {
                 if (damageOnHurt != null) component.setBoolean("damage_on_hurt", damageOnHurt);
                 if (equipOnInteract != null) {
                     if (ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_5)) component.setBoolean("equip_on_interact", equipOnInteract);
-                    else TerraLogger.warning("equip_on_interact in Equippable component is only supported in Minecraft 1.21.5 or newer versions");
+                    else TerraCraftItems.inst().logger().warning("equip_on_interact in Equippable component is only supported in Minecraft 1.21.5 or newer versions");
                 }
                 ReadWriteNBT soundComponent;
                 if (equipSound != null) {
@@ -102,23 +102,23 @@ public class EquippableComponent implements TerraEquippableComponent {
 
                 if (canBeSheared != null){
                     if (ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_6)) component.setBoolean("can_be_sheared", canBeSheared);
-                    else TerraLogger.warning("can_be_sheared in Equippable component is only supported in Minecraft 1.21.6 or newer versions");
+                    else TerraCraftItems.inst().logger().warning("can_be_sheared in Equippable component is only supported in Minecraft 1.21.6 or newer versions");
                 }
                 if (shearingSound != null) {
                     if (ServerVersion.isAfterOrEq(MinecraftVersions.v1_21_6)) {
                         soundComponent = component.getOrCreateCompound("shearing_sound");
                         soundComponent.setFloat("range", shearingSound.getRange());
                         soundComponent.setString("sound_id", shearingSound.getId());
-                    } else TerraLogger.warning("shearing_sound in Equippable component is only supported in Minecraft 1.21.6 or newer versions");
+                    } else TerraCraftItems.inst().logger().warning("shearing_sound in Equippable component is only supported in Minecraft 1.21.6 or newer versions");
                 }
 
                 String[] slots = slot.getStandardEquippableName();
                 if (slots.length > 1)
-                    TerraLogger.warning("Slot in EquippableComponent is only supported on a single slot(not group). Use the first slot name" + slots[0] + "as default");
+                    TerraCraftItems.inst().logger().warning("Slot in EquippableComponent is only supported on a single slot(not group). Use the first slot name" + slots[0] + "as default");
                 component.setString("slot", slots[0]);
                 component.setBoolean("swappable", swappable);
             });
-        } else TerraLogger.warning("Equippable component is only supported in Minecraft 1.21.2 or newer versions");
+        } else TerraCraftItems.inst().logger().warning("Equippable component is only supported in Minecraft 1.21.2 or newer versions");
     }
 
     @Override

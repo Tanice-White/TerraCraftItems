@@ -38,11 +38,4 @@ public interface TerraItemManager {
      * @return 符合筛选条件的物品名称集合
      */
     Collection<String> filterItems(String name);
-
-    /**
-     * 获取组件工厂实例
-     *
-     * @return {@link TerraComponentFactory} 实例
-     */
-    TerraComponentFactory getComponentFactory();
 }

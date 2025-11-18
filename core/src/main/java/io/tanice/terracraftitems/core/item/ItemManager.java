@@ -1,10 +1,8 @@
 package io.tanice.terracraftitems.core.item;
 
-import io.tanice.terracraftitems.api.item.TerraComponentFactory;
 import io.tanice.terracraftitems.api.item.TerraItem;
 import io.tanice.terracraftitems.api.item.TerraItemManager;
 import io.tanice.terracraftitems.paper.TerraCraftItems;
-import io.tanice.terracraftitems.paper.item.ComponentFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,12 +22,10 @@ public final class ItemManager implements TerraItemManager {
 
 
     private final ItemProvider provider;
-    private final ComponentFactory componentFactory;
     private final ConcurrentMap<String, TerraItem> items;
 
     public ItemManager() {
         this.provider = new ItemProvider();
-        this.componentFactory = ComponentFactory.inst();
         this.items = new ConcurrentHashMap<>();
         Bukkit.getScheduler().runTaskLater(TerraCraftItems.inst(), this::loadResource, 1L);
     }
@@ -67,11 +63,6 @@ public final class ItemManager implements TerraItemManager {
                 .filter(item -> item.getName() != null && item.getName().startsWith(name))
                 .map(TerraItem::getName)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public TerraComponentFactory getComponentFactory() {
-        return componentFactory;
     }
 
     private void loadResource() {

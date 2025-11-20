@@ -18,7 +18,6 @@ public final class ConfigManager {
 
     private static final String RESOURCE_FOLDER = "/config/";
 
-    private static double version;
     private static boolean debug;
     private static String language;
     private static boolean generateExamples;
@@ -30,7 +29,6 @@ public final class ConfigManager {
 
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(configFile);
 
-        version = cfg.getDouble("VERSION", -1);
         debug = cfg.getBoolean("DEBUG", false);
         language = cfg.getString("LANGUAGE", "EN");
         generateExamples = cfg.getBoolean("generate_examples", true);
@@ -42,10 +40,6 @@ public final class ConfigManager {
 
     public static void unload() {
 
-    }
-
-    public static double getVersion() {
-        return version;
     }
 
     public static boolean isDebug() {
